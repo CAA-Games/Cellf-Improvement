@@ -1,16 +1,8 @@
-# =================== #
-# = Unity generated = #
-# =================== #
  
 Temp/
 Obj/
 UnityGenerated/
 Library/
- 
- 
-# ========================================= #
-# = Visual Studio / MonoDevelop generated = #
-# ========================================= #
  
 ExportedObj/
 *.svd
@@ -22,12 +14,7 @@ ExportedObj/
 *.user
 *.unityproj
 *.booproj
- 
- 
-# ================ #
-# = OS generated = #
-# ================ #
- 
+  
 .DS_Store
 .DS_Store?
 ._*
@@ -36,11 +23,6 @@ ExportedObj/
 Icon?
 ehthumbs.db
 Thumbs.db
- 
- 
-# ==============
-# = 2D Toolkig =
-# ==============
  
 Assets/-tk2d
 Assets/-tk2d.*
