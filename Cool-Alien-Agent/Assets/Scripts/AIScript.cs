@@ -23,7 +23,7 @@ public class AIScript : MonoBehaviour {
 
 		targetPos.z = transform.position.z;
 		transform.LookAt (targetPos);
-		transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+		transform.Translate(Vector3.forward * gameObject.GetComponent<PlasmidLogic>().currentSpeed * Time.deltaTime);
 	}
 
 	void OnTriggerStay2D(Collider2D col){
