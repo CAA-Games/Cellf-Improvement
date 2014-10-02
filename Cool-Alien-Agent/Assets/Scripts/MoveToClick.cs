@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class MoveToClick : MonoBehaviour {
-
+	
 	public float moveSpeed = 2.0f;  // Units per secon
 	private Vector3 targetPos;
-
+	
 	// Use this for initialization
 	void Start () {
 		
