@@ -3,7 +3,6 @@ using System.Collections;
 
 public class MoveToClick : MonoBehaviour {
 	
-	public float moveSpeed = 2.0f;  // Units per secon
 	private Vector3 targetPos;
 	
 	// Use this for initialization
@@ -18,6 +17,6 @@ public class MoveToClick : MonoBehaviour {
 		}
 		targetPos.z = transform.position.z;
 		transform.LookAt (targetPos);
-		transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+		transform.Translate(Vector3.forward * gameObject.GetComponent<PlasmidLogic>().currentSpeed * Time.deltaTime);
 	}
 }
