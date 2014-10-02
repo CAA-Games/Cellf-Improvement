@@ -5,8 +5,7 @@ public class AIScript : MonoBehaviour {
 
 	public float moveSpeed = 2.0f;  // Units per secon
 	private Vector3 targetPos;
-	private GameObject target;
-	
+
 	// Use this for initialization
 	void Start () {
 		
@@ -14,7 +13,7 @@ public class AIScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (target != null && targetPos != null) {
+		if (targetPos != null) {
 			if(Vector3.Distance(gameObject.transform.position, targetPos) < 0.1f){
 				randomTarget();
 			}
@@ -27,11 +26,13 @@ public class AIScript : MonoBehaviour {
 		transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
 	}
 
-	void OnTriggerEnter(Collider col){
-		target = col.gameObject;
+	void OnTriggerStay2D(Collider2D col){
+		print ("Triggered");
+		targetPos = col.gameObject.transform.position;
 	}
 
 	void randomTarget(){
-		targetPos = new Vector3 (gameObject.transform.position.x - 10, gameObject.transform.position.y - 10);
+		print ("New random target");
+		targetPos = new Vector3 (gameObject.transform.position.x + Random.Range(-5.0f, 5.0f), gameObject.transform.position.y - Random.Range(-5.0f, 5.0f));
 	}
 }
