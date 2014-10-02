@@ -10,7 +10,7 @@ public class PlasmidLogic : MonoBehaviour
 		public float baseBlue = 1f;
 		public float baseRed = 1f;
 		public float baseSize = 1f;
-		public float baseLength = 1f;
+		public float baseLength = 1.5f;
 		public float currentSpeed = 2.0f;
 		public float currentGreen = 1f;
 		public float currentBlue = 1f;
@@ -53,5 +53,7 @@ public class PlasmidLogic : MonoBehaviour
 				currentSize += effect.size;
 				currentLength += effect.length;
 			}
+			gameObject.renderer.material.color = new Color (currentRed, currentGreen, currentBlue);
+			gameObject.transform.localScale = new Vector3(currentSize, currentSize, currentLength * currentSize);
 		}
 }
