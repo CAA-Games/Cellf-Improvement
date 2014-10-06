@@ -29,13 +29,9 @@ public class PlasmidLogic : MonoBehaviour
 		{		
 		}
 
-		void OnCollisionEnter2D (Collision2D col)
-		{
-				if (col.gameObject.tag == "Plasmid") {
-						plasmidEffects.Add (col.gameObject.GetComponent<PlasmidEffect>());
-						updateBacterium();
-						Destroy (col.gameObject);
-				}
+		public void addPlasmid (PlasmidEffect plasmid){
+			plasmidEffects.Add (plasmid);
+			updateBacterium ();
 		}
 
 		void updateBacterium(){
@@ -53,7 +49,7 @@ public class PlasmidLogic : MonoBehaviour
 				currentSize += effect.size;
 				currentLength += effect.length;
 			}
-			gameObject.renderer.material.color = new Color (currentRed, currentGreen, currentBlue);
+//			gameObject.renderer.material.color = new Color (currentRed, currentGreen, currentBlue);
 			gameObject.transform.localScale = new Vector3(currentSize, currentSize, currentLength * currentSize);
 		}
 }
