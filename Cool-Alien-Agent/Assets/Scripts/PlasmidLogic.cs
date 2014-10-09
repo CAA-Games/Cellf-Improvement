@@ -7,7 +7,8 @@ public class PlasmidLogic : MonoBehaviour
 		public GameObject startingPlasmid;
 		public int startingPlasmids;
 		public List<PlasmidEffect> plasmidEffects;
-		public GameObject PartPrefab;
+		public List<GameObject> PartPrefabs;
+		private int plasmidsToAdd;
 		public float baseSpeed = 2.0f;
 		public float baseGreen = 1f;
 		public float baseBlue = 1f;
@@ -25,8 +26,9 @@ public class PlasmidLogic : MonoBehaviour
 		void Start ()
 		{
 				plasmidEffects = new List<PlasmidEffect> ();
+				plasmidsToAdd = 0;
 				for (int i = 0; i < startingPlasmids; i++) {
-						addPlasmid (new PlasmidEffect ());
+					plasmidsToAdd++;
 				}
 				updateBacterium ();
 		}
@@ -34,15 +36,28 @@ public class PlasmidLogic : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{		
+			if (plasmidsToAdd > 0) {
+				newChildPart();
+				plasmidsToAdd--;
+			}
 		}
 
 		public void addPlasmid (PlasmidEffect plasmid)
 		{
 				plasmidEffects.Add (plasmid);
-				GameObject newPart = (GameObject)Instantiate (PartPrefab, new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);
-				newPart.GetComponent<PartLogic> ().player = this.gameObject;
-				newPart.transform.parent = this.transform;
+				newChildPart ();
 				updateBacterium ();
+		}
+
+		private void newChildPart(){
+			print (Random.Range (0, PartPrefabs.Count - 1));
+			GameObject newPart = (GameObject)Instantiate (PartPrefabs[Random.Range(0,PartPrefabs.Count)], randomMiddleLocation(), Quaternion.identity);
+			newPart.GetComponent<PartLogic> ().player = this.gameObject;
+			newPart.transform.parent = this.transform;
+		}
+
+		private Vector3 randomMiddleLocation(){
+			return new Vector3 (this.transform.position.x + Random.Range(-0.5f,0.5f), this.transform.position.y + Random.Range(-0.5f,0.5f), this.transform.position.z + Random.Range(-0.5f,0.5f));
 		}
 
 		void updateBacterium ()
