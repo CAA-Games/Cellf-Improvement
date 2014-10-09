@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class PlasmidLogic : MonoBehaviour
 {
 		private List<PlasmidEffect> plasmidEffects;
+		public GameObject PartPrefab;
 		public float baseSpeed = 2.0f;
 		public float baseGreen = 1f;
 		public float baseBlue = 1f;
@@ -31,6 +32,9 @@ public class PlasmidLogic : MonoBehaviour
 
 		public void addPlasmid (PlasmidEffect plasmid){
 			plasmidEffects.Add (plasmid);
+			GameObject newPart = (GameObject) Instantiate (PartPrefab, new Vector3 (this.transform.position.x, this.transform.position.y, this.transform.position.z), Quaternion.identity);
+			newPart.GetComponent<PartLogic>().player = this.gameObject;
+			newPart.transform.parent = this.transform;
 			updateBacterium ();
 		}
 
