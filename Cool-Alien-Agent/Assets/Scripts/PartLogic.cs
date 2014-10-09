@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GoTowardsCenter : MonoBehaviour {
+public class PartLogic : MonoBehaviour {
 
 	public GameObject player;
 	
@@ -12,7 +12,6 @@ public class GoTowardsCenter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Physics2D.IgnoreCollision (this.collider2D, player.collider2D);
 		rigidbody2D.AddForce (-1 * gameObject.transform.localPosition);
 	}
 
