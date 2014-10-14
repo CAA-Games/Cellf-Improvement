@@ -91,11 +91,30 @@ public class PlasmidLogic : MonoBehaviour
 			GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, new Vector3(cellToBeShot.transform.position.x + 1,cellToBeShot.transform.position.y + 1,cellToBeShot.transform.position.z + 1), Quaternion.identity);
 			PlasmidEffect effect = newPlasmid.gameObject.AddComponent<PlasmidEffect>();
 			copyPlasmidEffect(effect,cells[cellToBeShot]);
+			
+			var targetPos = GetWorldPositionOnPlane(Input.mousePosition, 0.0f);
+			
+			Vector2 distance = targetPos - transform.position;
+			if (distance.magnitude > 1) {
+				distance = distance.normalized;
+			}
+
+			newPlasmid.rigidbody2D.AddForce (distance * 500);
+
 			cells.Remove (cellToBeShot);
 			Destroy (cellToBeShot);
 			updateBacterium ();
 		}
+
 		void copyPlasmidEffect(PlasmidEffect copyTo, PlasmidEffect copyFrom){
 			copyTo.updateValues (copyFrom.speed, copyFrom.green, copyFrom.blue, copyFrom.red, copyFrom.size, copyFrom.length);
 		}
+
+	private Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z) {
+		Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+		Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, z));
+		float distance;
+		xy.Raycast(ray, out distance);
+		return ray.GetPoint(distance);
+	}
 }
