@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PartLogic : MonoBehaviour {
 
-	public GameObject player;
+	public GameObject player; // transform. parent
 	public int forceMultiplier = -1;
 	
 	// Use this for initialization

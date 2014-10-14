@@ -59,7 +59,7 @@ public class PlasmidLogic : MonoBehaviour
 		}
 
 		private Vector3 randomMiddleLocation(){
-			return new Vector3 (this.transform.position.x + Random.Range(-0.5f,0.5f), this.transform.position.y + Random.Range(-0.5f,0.5f), this.transform.position.z + Random.Range(-0.5f,0.5f));
+			return new Vector3 (this.transform.position.x + Random.Range(-0.5f,0.5f), this.transform.position.y + Random.Range(-0.5f,0.5f), 0);
 		}
 
 		void updateBacterium ()
@@ -79,7 +79,7 @@ public class PlasmidLogic : MonoBehaviour
 						currentLength += effect.length;
 				}
 //			gameObject.renderer.material.color = new Color (currentRed, currentGreen, currentBlue);
-				gameObject.transform.localScale = new Vector3 (currentSize, currentSize, currentLength * currentSize);
+				//gameObject.transform.localScale = new Vector3 (currentSize, currentSize, currentLength * currentSize);
 		}
 
 		void dropAPlasmid () {
@@ -88,7 +88,7 @@ public class PlasmidLogic : MonoBehaviour
 			}
 			print("dropping Plasmid");
 			GameObject cellToBeShot = (Enumerable.ToList(cells.Keys)[Random.Range(0,cells.Keys.Count)]);
-			GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, new Vector3(cellToBeShot.transform.position.x + 1,cellToBeShot.transform.position.y + 1,cellToBeShot.transform.position.z + 1), Quaternion.identity);
+			GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, new Vector3(cellToBeShot.transform.position.x + 1,cellToBeShot.transform.position.y + 1,0), Quaternion.identity);
 			PlasmidEffect effect = newPlasmid.gameObject.AddComponent<PlasmidEffect>();
 			copyPlasmidEffect(effect,cells[cellToBeShot]);
 			
@@ -110,11 +110,11 @@ public class PlasmidLogic : MonoBehaviour
 			copyTo.updateValues (copyFrom.speed, copyFrom.green, copyFrom.blue, copyFrom.red, copyFrom.size, copyFrom.length);
 		}
 
-	private Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z) {
-		Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-		Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, z));
-		float distance;
-		xy.Raycast(ray, out distance);
-		return ray.GetPoint(distance);
-	}
+		private Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z) {
+			Ray ray = Camera.main.ScreenPointToRay(screenPosition);
+			Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, z));
+			float distance;
+			xy.Raycast(ray, out distance);
+			return ray.GetPoint(distance);
+		}
 }
