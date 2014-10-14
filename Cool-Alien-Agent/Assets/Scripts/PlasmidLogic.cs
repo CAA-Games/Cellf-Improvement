@@ -6,8 +6,9 @@ public class PlasmidLogic : MonoBehaviour
 {
 		public GameObject startingPlasmid;
 		public int startingPlasmids;
-		public List<PlasmidEffect> plasmidEffects;
-		public List<GameObject> PartPrefabs;
+		public List<GameObject> partPrefabs;
+		public GameObject instantiatingPlasmid;
+		public Dictionary<GameObject, PlasmidEffect> cells;
 		private int plasmidsToAdd;
 		public float baseSpeed = 2.0f;
 		public float baseGreen = 1f;
@@ -25,7 +26,7 @@ public class PlasmidLogic : MonoBehaviour
 		// Use this for initialization
 		void Start ()
 		{
-				plasmidEffects = new List<PlasmidEffect> ();
+				cells = new Dictionary<GameObject,PlasmidEffect> ();
 				plasmidsToAdd = 0;
 				for (int i = 0; i < startingPlasmids; i++) {
 					plasmidsToAdd++;
@@ -44,16 +45,16 @@ public class PlasmidLogic : MonoBehaviour
 
 		public void addPlasmid (PlasmidEffect plasmid)
 		{
-				plasmidEffects.Add (plasmid);
-				newChildPart ();
+				cells.Add (newChildPart(), plasmid);
 				updateBacterium ();
 		}
 
-		private void newChildPart(){
-			print (Random.Range (0, PartPrefabs.Count - 1));
-			GameObject newPart = (GameObject)Instantiate (PartPrefabs[Random.Range(0,PartPrefabs.Count)], randomMiddleLocation(), Quaternion.identity);
+		private GameObject newChildPart(){
+			print (Random.Range (0, partPrefabs.Count - 1));
+			GameObject newPart = (GameObject)Instantiate (partPrefabs[Random.Range(0,partPrefabs.Count)], randomMiddleLocation(), Quaternion.identity);
 			newPart.GetComponent<PartLogic> ().player = this.gameObject;
 			newPart.transform.parent = this.transform;
+			return newPart;
 		}
 
 		private Vector3 randomMiddleLocation(){
@@ -68,7 +69,7 @@ public class PlasmidLogic : MonoBehaviour
 				currentRed = baseRed;
 				currentSize = baseSize;
 				currentLength = baseLength;
-				foreach (PlasmidEffect effect in plasmidEffects) {
+				foreach (PlasmidEffect effect in cells.Values) {
 						currentSpeed += effect.speed;
 						currentGreen += effect.green;
 						currentBlue += effect.blue;
@@ -81,6 +82,9 @@ public class PlasmidLogic : MonoBehaviour
 		}
 
 		void dropAPlasmid () {
+			//GameObject cellToBeShot = cells[(cells.Keys[Random.Range(0,cells.Keys.Count)])];
+			//GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, new Vector3(cellToBeShot.transform.position.x,transform.position.y,transform.position.z), Quaternion.identity);
+			
 			
 		}
 }
