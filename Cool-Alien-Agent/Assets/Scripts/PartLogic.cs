@@ -4,6 +4,7 @@ using System.Collections;
 public class PartLogic : MonoBehaviour {
 
 	public GameObject player;
+	public int forceMultiplier = -1;
 	
 	// Use this for initialization
 	void Start () {
@@ -12,7 +13,7 @@ public class PartLogic : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		rigidbody2D.AddForce (-1 * gameObject.transform.localPosition);
+		rigidbody2D.AddForce(forceMultiplier * gameObject.transform.localPosition);
 	}
 
 	void OnCollisionEnter2D (Collision2D col)
