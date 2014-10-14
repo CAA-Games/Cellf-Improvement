@@ -21,14 +21,19 @@ public class AIScript : MonoBehaviour {
 			randomTarget();
 		}
 
-		targetPos.z = transform.position.z;
-		transform.LookAt (targetPos);
-		transform.Translate(Vector3.forward * gameObject.GetComponent<PlasmidLogic>().currentSpeed * Time.deltaTime);
+		Vector2 distance = targetPos - transform.position;
+		if (distance.magnitude > 1) {
+			distance = distance.normalized;
+		}
+		
+		transform.Translate(distance * gameObject.GetComponent<PlasmidLogic>().currentSpeed * Time.deltaTime);
 	}
 
-	void OnTriggerStay2D(Collider2D col){
-		print ("Triggered");
-		targetPos = col.gameObject.transform.position;
+	void OnTriggerEnter2D(Collider2D col){
+		if (col.tag == "Plasmid" || col.tag == "Player") {
+			print ("Triggered");
+			targetPos = col.gameObject.transform.position;
+		}
 	}
 
 	void randomTarget(){
