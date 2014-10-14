@@ -79,4 +79,8 @@ public class PlasmidLogic : MonoBehaviour
 //			gameObject.renderer.material.color = new Color (currentRed, currentGreen, currentBlue);
 				gameObject.transform.localScale = new Vector3 (currentSize, currentSize, currentLength * currentSize);
 		}
+
+		void dropAPlasmid () {
+			
+		}
 }
