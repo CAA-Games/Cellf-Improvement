@@ -18,4 +18,13 @@ public class PlasmidEffect : MonoBehaviour {
 	void Update () {
 	
 	}
+
+	public void updateValues(float speed, float green, float blue, float red, float size, float length){
+		this.speed = speed;
+		this.green = green;
+		this.blue = blue;
+		this.red = red;
+		this.size = size;
+		this.length = length;
+	}
 }

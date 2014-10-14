@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class PlasmidLogic : MonoBehaviour
 {
@@ -82,9 +83,19 @@ public class PlasmidLogic : MonoBehaviour
 		}
 
 		void dropAPlasmid () {
-			//GameObject cellToBeShot = cells[(cells.Keys[Random.Range(0,cells.Keys.Count)])];
-			//GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, new Vector3(cellToBeShot.transform.position.x,transform.position.y,transform.position.z), Quaternion.identity);
-			
-			
+			if (cells.Count == 1) {
+				return;
+			}
+			print("dropping Plasmid");
+			GameObject cellToBeShot = (Enumerable.ToList(cells.Keys)[Random.Range(0,cells.Keys.Count)]);
+			GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, new Vector3(cellToBeShot.transform.position.x + 1,cellToBeShot.transform.position.y + 1,cellToBeShot.transform.position.z + 1), Quaternion.identity);
+			PlasmidEffect effect = newPlasmid.gameObject.AddComponent<PlasmidEffect>();
+			copyPlasmidEffect(effect,cells[cellToBeShot]);
+			cells.Remove (cellToBeShot);
+			Destroy (cellToBeShot);
+			updateBacterium ();
+		}
+		void copyPlasmidEffect(PlasmidEffect copyTo, PlasmidEffect copyFrom){
+			copyTo.updateValues (copyFrom.speed, copyFrom.green, copyFrom.blue, copyFrom.red, copyFrom.size, copyFrom.length);
 		}
 }
