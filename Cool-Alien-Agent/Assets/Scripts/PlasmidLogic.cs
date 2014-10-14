@@ -82,8 +82,8 @@ public class PlasmidLogic : MonoBehaviour
 		}
 
 		void dropAPlasmid () {
-			GameObject cellToBeShot = cells[(cells.Keys[Random.Range(0,cells.Keys.Count)])];
-			GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, new Vector3(cellToBeShot.transform.position.x,transform.position.y,transform.position.z), Quaternion.identity);
+			//GameObject cellToBeShot = cells[(cells.Keys[Random.Range(0,cells.Keys.Count)])];
+			//GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, new Vector3(cellToBeShot.transform.position.x,transform.position.y,transform.position.z), Quaternion.identity);
 			
 			
 		}
