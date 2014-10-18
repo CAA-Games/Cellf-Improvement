@@ -46,8 +46,16 @@ public class PlasmidLogic : MonoBehaviour
 
 		public void addPlasmid (PlasmidEffect plasmid)
 		{
-				cells.Add (newChildPart(), plasmid);
+				cells.Add (newChildPart(plasmid), plasmid);
 				updateBacterium ();
+		}
+
+		private GameObject newChildPart(PlasmidEffect plasmid){
+			print (Random.Range (0, partPrefabs.Count - 1));
+			GameObject newPart = (GameObject)Instantiate (plasmid.appearance, randomMiddleLocation(), Quaternion.identity);
+			newPart.GetComponent<PartLogic> ().player = this.gameObject;
+			newPart.transform.parent = this.transform;
+			return newPart;
 		}
 
 		private GameObject newChildPart(){
@@ -107,7 +115,7 @@ public class PlasmidLogic : MonoBehaviour
 		}
 
 		void copyPlasmidEffect(PlasmidEffect copyTo, PlasmidEffect copyFrom){
-			copyTo.updateValues (copyFrom.speed, copyFrom.green, copyFrom.blue, copyFrom.red, copyFrom.size, copyFrom.length);
+			copyTo.updateValues (copyFrom.speed, copyFrom.green, copyFrom.blue, copyFrom.red, copyFrom.size, copyFrom.length, copyFrom.appearance);
 		}
 
 		private Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z) {
