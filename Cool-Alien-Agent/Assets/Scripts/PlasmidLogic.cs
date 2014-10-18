@@ -82,7 +82,7 @@ public class PlasmidLogic : MonoBehaviour
 				//gameObject.transform.localScale = new Vector3 (currentSize, currentSize, currentLength * currentSize);
 		}
 
-		void dropAPlasmid () {
+		void dropPlasmid (Vector3 direction) {
 			if (cells.Count == 1) {
 				return;
 			}
@@ -92,7 +92,7 @@ public class PlasmidLogic : MonoBehaviour
 			PlasmidEffect effect = newPlasmid.gameObject.AddComponent<PlasmidEffect>();
 			copyPlasmidEffect(effect,cells[cellToBeShot]);
 			
-			var targetPos = GetWorldPositionOnPlane(Input.mousePosition, 0.0f);
+			var targetPos = GetWorldPositionOnPlane(direction, 0.0f);
 			
 			Vector2 distance = targetPos - transform.position;
 			if (distance.magnitude > 1) {
