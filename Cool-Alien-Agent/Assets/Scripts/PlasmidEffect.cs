@@ -9,6 +9,7 @@ public class PlasmidEffect : MonoBehaviour {
 	public float red = 0;
 	public float size = 0;
 	public float length = 0;
+	public GameObject appearance;
 
 	// Use this for initialization
 	void Start () {
@@ -19,12 +20,13 @@ public class PlasmidEffect : MonoBehaviour {
 	
 	}
 
-	public void updateValues(float speed, float green, float blue, float red, float size, float length){
+	public void updateValues(float speed, float green, float blue, float red, float size, float length, GameObject appearance){
 		this.speed = speed;
 		this.green = green;
 		this.blue = blue;
 		this.red = red;
 		this.size = size;
 		this.length = length;
+		this.appearance = appearance;
 	}
 }
