@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 public class PlasmidLogic : MonoBehaviour
 {
@@ -51,15 +52,15 @@ public class PlasmidLogic : MonoBehaviour
 		}
 
 		private GameObject newChildPart(){
-			print (Random.Range (0, partPrefabs.Count - 1));
-			GameObject newPart = (GameObject)Instantiate (partPrefabs[Random.Range(0,partPrefabs.Count)], randomMiddleLocation(), Quaternion.identity);
+		print (UnityEngine.Random.Range (0, partPrefabs.Count - 1));
+		GameObject newPart = (GameObject)Instantiate (partPrefabs[UnityEngine.Random.Range(0,partPrefabs.Count)], randomMiddleLocation(), Quaternion.identity);
 			newPart.GetComponent<PartLogic> ().player = this.gameObject;
 			newPart.transform.parent = this.transform;
 			return newPart;
 		}
 
 		private Vector3 randomMiddleLocation(){
-			return new Vector3 (this.transform.position.x + Random.Range(-0.5f,0.5f), this.transform.position.y + Random.Range(-0.5f,0.5f), 0);
+		return new Vector3 (this.transform.position.x + UnityEngine.Random.Range(-0.5f,0.5f), this.transform.position.y + UnityEngine.Random.Range(-0.5f,0.5f), 0);
 		}
 
 		void updateBacterium ()
@@ -87,8 +88,19 @@ public class PlasmidLogic : MonoBehaviour
 				return;
 			}
 			print("dropping Plasmid");
-			GameObject cellToBeShot = (Enumerable.ToList(cells.Keys)[Random.Range(0,cells.Keys.Count)]);
-			GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, new Vector3(cellToBeShot.transform.position.x + 1,cellToBeShot.transform.position.y + 1,0), Quaternion.identity);
+			GameObject cellToBeShot = Enumerable.ToList(cells.Keys)[0];
+			float minDistance = Vector3.Distance(cellToBeShot.transform.position,direction);
+			float tempDistance;
+			foreach(GameObject part in cells.Keys){
+				tempDistance = Math.Abs(Vector3.Distance(part.transform.position, direction));
+				print (tempDistance);
+				if(tempDistance < minDistance){
+					minDistance = tempDistance;
+					cellToBeShot = part;
+				}
+			}
+
+			GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, new Vector3(cellToBeShot.transform.position.x,cellToBeShot.transform.position.y,0), Quaternion.identity);
 			PlasmidEffect effect = newPlasmid.gameObject.AddComponent<PlasmidEffect>();
 			copyPlasmidEffect(effect,cells[cellToBeShot]);
 			

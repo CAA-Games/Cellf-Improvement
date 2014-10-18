@@ -15,7 +15,6 @@ public class AIScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(Random.Range(1,1000) == 1){
-			print("FIRING");
 			this.gameObject.SendMessage("dropPlasmid", randomShotTarget());
 			plasmidShot = true;
 			Invoke("plasmidOutOfSight",2);
@@ -38,33 +37,27 @@ public class AIScript : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D col){
 		if (col.tag == "Plasmid" && !plasmidShot) {
-			print ("Triggered");
 			targetPos = col.gameObject.transform.position;
 		}
 	}
 
 	private Vector3 randomShotTarget(){
-		print ("New random target");
 		return new Vector3 (transform.position.x + minusOrPlus() * Random.Range(2f,5.0f), transform.position.y + minusOrPlus() * Random.Range(2f,5.0f), 0);
 	}
 
 	private Vector3 randomTarget(){
-		print ("New random target");
 		return new Vector3 (transform.position.x + Random.Range(-5.0f,5.0f), transform.position.y + Random.Range(-5.0f,5.0f), 0);
 	}
 
 	private float minusOrPlus(){
 		if (Random.Range (0, 2) == 0) {
-			print ("negative!");
 			return -1f;
 		} else {
-			print ("positive!");
 			return 1f;
 		}
 	}
 
 	private void plasmidOutOfSight(){
-		print ("out of sight");
 		plasmidShot = false;
 	}
 }
