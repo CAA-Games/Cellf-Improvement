@@ -92,7 +92,7 @@ public class PlasmidLogic : MonoBehaviour
 			float minDistance = Vector3.Distance(cellToBeShot.transform.position,direction);
 			float tempDistance;
 			foreach(GameObject part in cells.Keys){
-				tempDistance = Math.Abs(Vector3.Distance(part.transform.position, direction));
+				tempDistance = Vector3.Distance(part.transform.position, direction);
 				print (tempDistance);
 				if(tempDistance < minDistance){
 					minDistance = tempDistance;
