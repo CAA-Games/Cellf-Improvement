@@ -52,7 +52,7 @@ public class PlasmidLogic : MonoBehaviour
 		}
 
 		private GameObject newChildPart(PlasmidEffect plasmid){
-			print (Random.Range (0, partPrefabs.Count - 1));
+			print (UnityEngine.Random.Range (0, partPrefabs.Count - 1));
 			GameObject newPart = (GameObject)Instantiate (plasmid.appearance, randomMiddleLocation(), Quaternion.identity);
 			newPart.GetComponent<PartLogic> ().player = this.gameObject;
 			newPart.transform.parent = this.transform;
