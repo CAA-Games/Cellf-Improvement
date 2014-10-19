@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class SmoothFollow : MonoBehaviour
 {
@@ -17,9 +18,14 @@ public class SmoothFollow : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
+			setZ ();
 				if (objectToFollow) {
-						gameObject.transform.position = Vector2.Lerp (gameObject.transform.position, objectToFollow.transform.position, smoothness);						
-						gameObject.transform.position = new Vector3 (gameObject.transform.position.x, gameObject.transform.position.y, z);
-				}
+						Vector3 newPosition = new Vector3 (objectToFollow.transform.position.x, objectToFollow.transform.position.y, z);
+						gameObject.transform.position = Vector3.Lerp (gameObject.transform.position, newPosition, smoothness);						
+				}			
+		}
+
+		public void setZ(){
+			z = Math.Min(((float) Math.Log((objectToFollow.GetComponent<PlasmidLogic>().cells.Count))/2) * -20f,-20);
 		}
 }

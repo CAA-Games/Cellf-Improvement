@@ -89,13 +89,11 @@ public class PlasmidLogic : MonoBehaviour
 				if (cells.Count == 1) {
 						return;
 				}
-				print ("dropping Plasmid");
 				GameObject cellToBeShot = Enumerable.ToList (cells.Keys) [0];
 				float minDistance = Vector3.Distance (cellToBeShot.transform.position, direction);
 				float tempDistance;
 				foreach (GameObject part in cells.Keys) {
 						tempDistance = Vector3.Distance (part.transform.position, direction);
-						print (tempDistance);
 						if (tempDistance < minDistance) {
 								minDistance = tempDistance;
 								cellToBeShot = part;
