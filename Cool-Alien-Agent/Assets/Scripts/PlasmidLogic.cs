@@ -105,15 +105,12 @@ public class PlasmidLogic : MonoBehaviour
 				GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, new Vector3 (cellToBeShot.transform.position.x, cellToBeShot.transform.position.y, 0), Quaternion.identity);
 				PlasmidEffect effect = newPlasmid.gameObject.AddComponent<PlasmidEffect> ();
 				copyPlasmidEffect (effect, cells [cellToBeShot]);
-			
-				var targetPos = GetWorldPositionOnPlane (direction, 0.0f);
-			
-				Vector2 distance = targetPos - transform.position;
-				if (distance.magnitude > 1) {
-						distance = distance.normalized;
+				direction = direction - transform.position;
+				if (direction.magnitude > 1) {
+						direction = direction.normalized;
 				}
 
-				newPlasmid.rigidbody2D.AddForce (distance * 500);
+				newPlasmid.rigidbody2D.AddForce (direction * 500);
 
 				cells.Remove (cellToBeShot);
 				Destroy (cellToBeShot);
