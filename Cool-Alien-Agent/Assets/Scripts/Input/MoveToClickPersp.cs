@@ -16,7 +16,7 @@ public class MoveToClickPersp : MonoBehaviour {
 			targetPos = GetWorldPositionOnPlane(Input.mousePosition, 0.0f);
 		}		
 		if(Input.GetMouseButtonDown(1)) {
-			this.gameObject.SendMessage("dropPlasmid",Input.mousePosition);
+			this.gameObject.SendMessage("dropPlasmid", GetWorldPositionOnPlane(Input.mousePosition, 0.0f));
 		}
 		Vector2 distance = targetPos - transform.position;
 		if (distance.magnitude > 1) {
