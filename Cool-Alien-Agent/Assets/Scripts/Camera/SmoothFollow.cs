@@ -8,6 +8,7 @@ public class SmoothFollow : MonoBehaviour
 		public GameObject objectToFollow;
 		public float z;
 		public float smoothness;
+		public float mousiness;
 
 		// Use this for initialization
 		void Start ()
@@ -18,14 +19,17 @@ public class SmoothFollow : MonoBehaviour
 		// Update is called once per frame
 		void Update ()
 		{
-			setZ ();
-				if (objectToFollow) {
-						Vector3 newPosition = new Vector3 (objectToFollow.transform.position.x, objectToFollow.transform.position.y, z);
+				setZ ();
+				if (objectToFollow) {	
+						Vector3 targetPosition = objectToFollow.GetComponent<MoveToClickPersp> ().targetPos;
+						targetPosition = Vector3.Lerp (objectToFollow.transform.position, targetPosition, mousiness);
+						Vector3 newPosition = new Vector3 (targetPosition.x, targetPosition.y, z);
 						gameObject.transform.position = Vector3.Lerp (gameObject.transform.position, newPosition, smoothness);						
 				}			
 		}
 
-		public void setZ(){
-			z = Math.Min(((float) Math.Log((objectToFollow.GetComponent<PlasmidLogic>().cells.Count))/2) * -20f,-20);
+		public void setZ ()
+		{
+				z = Math.Min (((float)Math.Log ((objectToFollow.GetComponent<PlasmidLogic> ().cells.Count)) / 2) * -20f, -20);
 		}
 }
