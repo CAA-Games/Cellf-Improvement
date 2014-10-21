@@ -16,13 +16,13 @@ public class PlasmidLogic : MonoBehaviour
 		public float baseGreen = 1f;
 		public float baseBlue = 1f;
 		public float baseRed = 1f;
-		public float baseSize = 1f;
+		public float baseSize = 0f;
 		public float baseLength = 1.5f;
 		public float currentSpeed = 2.0f;
 		public float currentGreen = 1f;
 		public float currentBlue = 1f;
 		public float currentRed = 1f;
-		public float currentSize = 1f;
+		public float currentSize = 0f;
 		public float currentLength = 1f;
 
 		// Use this for initialization
@@ -56,6 +56,7 @@ public class PlasmidLogic : MonoBehaviour
 				GameObject newPart = (GameObject)Instantiate (plasmid.appearance, randomMiddleLocation (), Quaternion.identity);
 				newPart.GetComponent<PartLogic> ().player = this.gameObject;
 				newPart.transform.parent = this.transform;
+				newPart.transform.localScale = transform.localScale;
 				return newPart;
 		}
 
@@ -80,8 +81,10 @@ public class PlasmidLogic : MonoBehaviour
 						currentSize += effect.size;
 						currentLength += effect.length;
 				}
-//			gameObject.renderer.material.color = new Color (currentRed, currentGreen, currentBlue);
-				//gameObject.transform.localScale = new Vector3 (currentSize, currentSize, currentLength * currentSize);
+				transform.localScale = new Vector3(1 + currentSize/20,1 + currentSize/20,transform.localScale.z);
+				foreach (GameObject part in cells.Keys) {
+					//part.GetComponent<CellAppearance>().updateColor(82 - (int)currentRed * 3, 99 - (int)currentGreen * 3, 126 - (int)currentBlue * 3);
+				}
 		}
 
 		void dropPlasmid (Vector3 direction)
