@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MoveToClickPersp : MonoBehaviour {
 	
-	private Vector3 targetPos;
+	public Vector3 targetPos;
 	
 	// Use this for initialization
 	void Start () {
