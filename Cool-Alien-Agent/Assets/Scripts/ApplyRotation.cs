@@ -8,6 +8,6 @@ public class ApplyRotation : MonoBehaviour
 
 		void Update ()
 		{
-				transform.Rotate (rotation);
+				transform.Rotate (rotation*Time.deltaTime);
 		}
 }
