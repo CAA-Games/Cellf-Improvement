@@ -96,11 +96,11 @@ public class PlasmidLogic : MonoBehaviour
 				GameObject cellToBeShot = Enumerable.ToList (cells.Keys) [0];
 				float minDistance = Vector3.Distance (cellToBeShot.transform.position, direction);
 				float tempDistance;
-				foreach (GameObject part in cells.Keys) {
-						tempDistance = Vector3.Distance (part.transform.position, direction);
+				foreach (GameObject cell in cells.Keys) {
+						tempDistance = Vector3.Distance (cell.transform.position, direction);
 						if (tempDistance < minDistance) {
 								minDistance = tempDistance;
-								cellToBeShot = part;
+								cellToBeShot = cell;
 						}
 				}
 
@@ -113,9 +113,14 @@ public class PlasmidLogic : MonoBehaviour
 				}
 
 				newPlasmid.rigidbody2D.AddForce (direction * 500);
+				RemoveCell (cellToBeShot);
+		}
 
-				cells.Remove (cellToBeShot);
-				Destroy (cellToBeShot);
+		public void RemoveCell (GameObject cell)
+		{
+		
+				cells.Remove (cell);
+				Destroy (cell);
 				updateBacterium ();
 		}
 
