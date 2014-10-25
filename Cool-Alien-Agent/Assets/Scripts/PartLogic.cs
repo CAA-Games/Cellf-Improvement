@@ -15,9 +15,12 @@ public class PartLogic : MonoBehaviour
 		// Amount of health damage cell takes per second
 		public float virusResistance = 1.0f;
 
+	#region Unity callbacks
+
 		void Start ()
 		{
 				currentHealth = maxHealth;
+				UpdateHealth ();
 		}
 
 		void Update ()
@@ -40,6 +43,10 @@ public class PartLogic : MonoBehaviour
 						TakeDamage (1.0f);
 				}
 		}
+
+	#endregion
+
+	#region Virus
 
 		void InfectCellWithVirus (GameObject virus)
 		{
@@ -70,12 +77,7 @@ public class PartLogic : MonoBehaviour
 				TakeDamage (virusResistance * Time.deltaTime);
 		}
 
-		public void TakeDamage ()
-		{
-				currentHealth -= Time.deltaTime;
-				UpdateHealth ();
-
-		}
+	#endregion
 
 		public void TakeDamage (float amount)
 		{
