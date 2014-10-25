@@ -54,8 +54,9 @@ public class PlasmidLogic : MonoBehaviour
 		private GameObject newChildPart (PlasmidEffect plasmid)
 		{
 				GameObject newPart = (GameObject)Instantiate (plasmid.appearance, randomMiddleLocation (), Quaternion.identity);
-				newPart.GetComponent<PartLogic> ().player = this.gameObject;
-				newPart.transform.parent = this.transform;
+				newPart.GetComponent<PartLogic> ().player = gameObject;
+				newPart.transform.parent = transform;
+				newPart.tag = gameObject.tag;
 				
 				return newPart;
 		}
@@ -67,39 +68,44 @@ public class PlasmidLogic : MonoBehaviour
 
 		void updateBacterium ()
 		{
-				currentSpeed = baseSpeed;
-				currentGreen = baseGreen;
-				currentBlue = baseBlue;
-				currentRed = baseRed;
-				currentSize = baseSize;
-				currentLength = baseLength;
-				foreach (PlasmidEffect effect in cells.Values) {
-						currentSpeed += effect.speed;
-						currentGreen += effect.green;
-						currentBlue += effect.blue;
-						currentRed += effect.red;
-						currentSize += effect.size;
-						currentLength += effect.length;
-				}
-				foreach (GameObject part in cells.Keys) {
-					part.transform.localScale = new Vector3(1 + currentSize/20,1 + currentSize/20,part.transform.localScale.z);
-					//part.GetComponent<CellAppearance>().updateColor(82 - (int)currentRed * 3, 99 - (int)currentGreen * 3, 126 - (int)currentBlue * 3);
+				if (cells.Count < 0) {
+						print ("A bacterium died!");
+						Destroy (gameObject);
+				} else {
+						currentSpeed = baseSpeed;
+						currentGreen = baseGreen;
+						currentBlue = baseBlue;
+						currentRed = baseRed;
+						currentSize = baseSize;
+						currentLength = baseLength;
+						foreach (PlasmidEffect effect in cells.Values) {
+								currentSpeed += effect.speed;
+								currentGreen += effect.green;
+								currentBlue += effect.blue;
+								currentRed += effect.red;
+								currentSize += effect.size;
+								currentLength += effect.length;
+						}
+						foreach (GameObject part in cells.Keys) {
+								part.transform.localScale = new Vector3 (1 + currentSize / 20, 1 + currentSize / 20, part.transform.localScale.z);
+								//part.GetComponent<CellAppearance>().updateColor(82 - (int)currentRed * 3, 99 - (int)currentGreen * 3, 126 - (int)currentBlue * 3);
+						}
 				}
 		}
 
 		void dropPlasmid (Vector3 direction)
 		{
-				if (cells.Count == 1) {
+				if (cells.Count <= 1) {
 						return;
 				}
 				GameObject cellToBeShot = Enumerable.ToList (cells.Keys) [0];
 				float minDistance = Vector3.Distance (cellToBeShot.transform.position, direction);
 				float tempDistance;
-				foreach (GameObject part in cells.Keys) {
-						tempDistance = Vector3.Distance (part.transform.position, direction);
+				foreach (GameObject cell in cells.Keys) {
+						tempDistance = Vector3.Distance (cell.transform.position, direction);
 						if (tempDistance < minDistance) {
 								minDistance = tempDistance;
-								cellToBeShot = part;
+								cellToBeShot = cell;
 						}
 				}
 
@@ -112,9 +118,14 @@ public class PlasmidLogic : MonoBehaviour
 				}
 
 				newPlasmid.rigidbody2D.AddForce (direction * 500);
+				RemoveCell (cellToBeShot);
+		}
 
-				cells.Remove (cellToBeShot);
-				Destroy (cellToBeShot);
+		public void RemoveCell (GameObject cell)
+		{
+		
+				cells.Remove (cell);
+				Destroy (cell);
 				updateBacterium ();
 		}
 

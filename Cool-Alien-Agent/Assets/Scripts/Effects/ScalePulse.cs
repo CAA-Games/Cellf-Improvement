@@ -6,7 +6,12 @@ public class ScalePulse : MonoBehaviour
 		public float baseScale = 1;
 		public float pulseSizeDifference = 0.2f;
 		public float rate = 0.02f;
-		private float randomSeed = Random.Range (0, 60);
+		private float randomSeed;
+
+		void Start ()
+		{
+				randomSeed = Random.Range (0, 60);
+		}
 
 		void Update ()
 		{
