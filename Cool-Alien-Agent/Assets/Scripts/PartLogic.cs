@@ -5,13 +5,10 @@ public class PartLogic : MonoBehaviour {
 
 	public GameObject player; // transform. parent
 	public int forceMultiplier = -1;
-	
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
+	// Health as in how long (in seconds) does it take to destroy this cell with continuous calls to
+	// TakeDamage() is once per update
+	public float health = 2.0f;
+
 	void Update () {
 		rigidbody2D.AddForce(forceMultiplier * gameObject.transform.localPosition);
 	}
@@ -23,5 +20,9 @@ public class PartLogic : MonoBehaviour {
 			logic.addPlasmid(col.gameObject.GetComponent<PlasmidEffect>());
 			Destroy (col.gameObject);
 		}
+	}
+
+	public void TakeDamage() {
+		health -= Time.deltaTime;
 	}
 }
