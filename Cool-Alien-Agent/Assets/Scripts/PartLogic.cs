@@ -3,7 +3,7 @@ using System.Collections;
 
 public class PartLogic : MonoBehaviour
 {
-
+		public GameObject explosion;
 		public GameObject player; // transform. parent
 		public int forceMultiplier = -1;
 		// Health as in how long (in seconds) does it take to destroy this cell with continuous calls to
@@ -49,6 +49,7 @@ public class PartLogic : MonoBehaviour
 		{
 				if (currentHealth < 0) {
 						transform.parent.gameObject.SendMessage ("RemoveCell", gameObject);
+						Destroy (Instantiate (explosion, transform.position, Quaternion.identity), 10.0f);
 						Destroy (gameObject);		
 				}
 				gameObject.particleSystem.emissionRate = (10f - currentHealth / maxHealth * 10f);
