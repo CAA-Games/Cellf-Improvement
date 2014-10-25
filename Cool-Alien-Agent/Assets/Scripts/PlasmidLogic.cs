@@ -54,8 +54,9 @@ public class PlasmidLogic : MonoBehaviour
 		private GameObject newChildPart (PlasmidEffect plasmid)
 		{
 				GameObject newPart = (GameObject)Instantiate (plasmid.appearance, randomMiddleLocation (), Quaternion.identity);
-				newPart.GetComponent<PartLogic> ().player = this.gameObject;
-				newPart.transform.parent = this.transform;
+				newPart.GetComponent<PartLogic> ().player = gameObject;
+				newPart.transform.parent = transform;
+				newPart.tag = gameObject.tag;
 				
 				return newPart;
 		}
@@ -82,8 +83,8 @@ public class PlasmidLogic : MonoBehaviour
 						currentLength += effect.length;
 				}
 				foreach (GameObject part in cells.Keys) {
-					part.transform.localScale = new Vector3(1 + currentSize/20,1 + currentSize/20,part.transform.localScale.z);
-					//part.GetComponent<CellAppearance>().updateColor(82 - (int)currentRed * 3, 99 - (int)currentGreen * 3, 126 - (int)currentBlue * 3);
+						part.transform.localScale = new Vector3 (1 + currentSize / 20, 1 + currentSize / 20, part.transform.localScale.z);
+						//part.GetComponent<CellAppearance>().updateColor(82 - (int)currentRed * 3, 99 - (int)currentGreen * 3, 126 - (int)currentBlue * 3);
 				}
 		}
 
