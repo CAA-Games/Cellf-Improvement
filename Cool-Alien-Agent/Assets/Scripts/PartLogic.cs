@@ -54,6 +54,7 @@ public class PartLogic : MonoBehaviour
 				this.virus = virus;
 				virus.SetActive (false);
 				gameObject.particleSystem.startColor = Color.black;
+				gameObject.particleSystem.startSize = 1.0f;
 		}
 
 		void SpreadVirus ()
