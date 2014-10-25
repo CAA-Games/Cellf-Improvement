@@ -12,6 +12,5 @@ public class Appearance : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		camera.backgroundColor = color;
 	}
 }

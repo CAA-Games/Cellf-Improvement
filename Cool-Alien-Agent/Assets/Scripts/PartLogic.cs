@@ -91,7 +91,7 @@ public class PartLogic : MonoBehaviour
 		{
 				if (currentHealth < 0) {
 						transform.parent.gameObject.SendMessage ("RemoveCell", gameObject);
-						Destroy (Instantiate (explosion, transform.position, Quaternion.identity), 10.0f);
+						Destroy (Instantiate (explosion, transform.position, Quaternion.identity), 15.0f);
 						Destroy (gameObject);		
 				}
 				gameObject.particleSystem.emissionRate = (10f - currentHealth / maxHealth * 10f);
