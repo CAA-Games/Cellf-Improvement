@@ -42,7 +42,7 @@ public class PartLogic : MonoBehaviour
 
 		public void Infect(){
 			infection++;
-		gameObject.renderer.material.color = new Color (renderer.material.color.r -0.1f,renderer.material.color.g - 0.1f,renderer.material.color.b - 0.1f);
+			gameObject.renderer.material.color = new Color (renderer.material.color.r -0.1f,renderer.material.color.g - 0.1f,renderer.material.color.b - 0.1f);
 			if (infection == 5) {
 				transform.parent.gameObject.SendMessage ("RemoveCell", gameObject);
 				int viruses = Random.Range(2,5);
