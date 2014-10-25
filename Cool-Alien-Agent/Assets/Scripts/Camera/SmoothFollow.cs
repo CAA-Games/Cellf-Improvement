@@ -25,7 +25,9 @@ public class SmoothFollow : MonoBehaviour
 						targetPosition = Vector3.Lerp (objectToFollow.transform.position, targetPosition, mousiness);
 						Vector3 newPosition = new Vector3 (targetPosition.x, targetPosition.y, z);
 						gameObject.transform.position = Vector3.Lerp (gameObject.transform.position, newPosition, smoothness);						
-				}			
+				} else {
+						Destroy (this);
+				}
 		}
 
 		public void setZ ()
