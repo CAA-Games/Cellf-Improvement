@@ -29,12 +29,20 @@ public class PartLogic : MonoBehaviour
 						Destroy (col.gameObject);
 				} else if (col.gameObject.tag != gameObject.tag) {
 						print ("Ouch!");
+						TakeDamage (1.0f);
 				}
 		}
 
 		public void TakeDamage ()
 		{
 				currentHealth -= Time.deltaTime;
+				gameObject.particleSystem.emissionRate = (10f - currentHealth / maxHealth * 10f);
+		}
+
+		public void TakeDamage (float amount)
+		{
+				print (gameObject + " just took " + amount + " damage!");
+				currentHealth -= amount;
 				gameObject.particleSystem.emissionRate = (10f - currentHealth / maxHealth * 10f);
 		}
 }
