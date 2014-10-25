@@ -7,6 +7,7 @@ public class PlasmidSpawner : MonoBehaviour {
 
 	public List<GameObject> partPrefabs;
 	public GameObject instantiatingPlasmid;
+	public GameObject instantiatingVirus;
 	public Transform player;
 
 	// Use this for initialization
@@ -19,12 +20,20 @@ public class PlasmidSpawner : MonoBehaviour {
 		if (Random.Range (1, 100) == 1) {
 			spawnPlasmid();
 		}
+		if (Random.Range (1, 10000) == 1) {
+			print ("Virus spawned!");
+			spawnVirus();
+		}
 	}
 
 	private void spawnPlasmid(){
 		GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, randomLocation(), Quaternion.identity);
 		PlasmidEffect effect = newPlasmid.gameObject.AddComponent<PlasmidEffect>();
 		randomizeAttributes (effect);
+	}
+
+	private void spawnVirus(){
+		GameObject newVirus = (GameObject)Instantiate (instantiatingVirus, randomLocation(), Quaternion.identity);
 	}
 
 	private Vector3 randomLocation(){
