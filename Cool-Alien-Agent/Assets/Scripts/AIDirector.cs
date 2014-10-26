@@ -13,6 +13,7 @@ public class AIDirector : MonoBehaviour
 		public int stage;
 		private int spawnInterval = 0;
 		private float timer = 1;
+		public float spawnRange, spawnRangeVariance;
 
 		void Update ()
 		{ 
@@ -59,8 +60,8 @@ public class AIDirector : MonoBehaviour
 				Vector3 playerPosition = player.transform.position;
 				Vector3 randomizedPosition = ApplicationLogic.GetWorldPositionOnPlane (Vector3.zero, 0.0f);
 				randomizedPosition -= playerPosition;
-				Quaternion rotation = ApplicationLogic.randomRotation();
-				randomizedPosition = rotation * randomizedPosition;
+				randomizedPosition = ApplicationLogic.randomRotation () * randomizedPosition;
+				randomizedPosition *= Random.Range (spawnRange, spawnRange + spawnRangeVariance);
 				randomizedPosition += playerPosition;
 				return randomizedPosition;
 		}
