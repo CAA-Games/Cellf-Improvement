@@ -20,6 +20,7 @@ public class AIDirector : MonoBehaviour
 		public float stage1spawnInterval = 4;
 		public float stage1spawnVariance = 2;
 		public float spawnRange = 10, spawnRangeVariance = 5;
+		private bool plasmidSpawned = false;
 
 		void Update ()
 		{ 
@@ -32,9 +33,20 @@ public class AIDirector : MonoBehaviour
 						}
 						break;
 				case 1:
+						if (timer < 3 && !plasmidSpawned) {
+								spawnPlasmid (1);
+								plasmidSpawned = true;
+						}
 						if (timer < 0) {
-								spawnEnemy (playerSize - 1);
-								timer = Random.Range (3f, 4f);
+								spawnEnemy (Mathf.Max (Random.Range (0, playerSize - 1), 0));
+								timer = Random.Range (4f, 7f);
+								plasmidSpawned = false;
+						}
+						break;
+				case 2:
+						if (timer < 0) {
+								spawnVirus ();
+								timer = Random.Range (20f, 30f);
 						}
 						break;
 				}
@@ -58,9 +70,10 @@ public class AIDirector : MonoBehaviour
 
 		void CheckXp ()
 		{
-				print ("Experience: " + xp);
 				if (xp > 30 && stage == 0) {
 						stage++;	
+				} else if (xp > 110 && stage == 1) {
+						stage++;
 				}
 		}
 	
