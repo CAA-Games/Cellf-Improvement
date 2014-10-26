@@ -1,43 +1,31 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MoveToClickPersp : MonoBehaviour {
+public class MoveToClickPersp : MonoBehaviour
+{
 	
-	public Vector3 targetPos;
+		public Vector3 targetPos;
 	
-	// Use this for initialization
-	void Start () {
-		targetPos = transform.position;
-	}
-	// Update is called once per frame
-	
-	void Update () {
-		if (Input.GetMouseButton(0)) {
-			targetPos = GetWorldPositionOnPlane(Input.mousePosition, 0.0f);
-		}		
-		if(Input.GetMouseButtonDown(1)) {
-			this.gameObject.SendMessage("dropPlasmid", GetWorldPositionOnPlane(Input.mousePosition, 0.0f));
+		// Use this for initialization
+		void Start ()
+		{
+				targetPos = transform.position;
 		}
-		Vector2 distance = targetPos - transform.position;
-		if (distance.magnitude > 1) {
-			distance = distance.normalized;
-		}
+		// Update is called once per frame
+	
+		void Update ()
+		{
+				if (Input.GetMouseButton (0)) {
+						targetPos = ApplicationLogic.GetWorldPositionOnPlane (Input.mousePosition, 0.0f);
+				}		
+				if (Input.GetMouseButtonDown (1)) {
+						this.gameObject.SendMessage ("dropPlasmid", ApplicationLogic.GetWorldPositionOnPlane (Input.mousePosition, 0.0f));
+				}
+				Vector2 distance = targetPos - transform.position;
+				if (distance.magnitude > 1) {
+						distance = distance.normalized;
+				}
 		
-		transform.Translate(distance * gameObject.GetComponent<PlasmidLogic>().currentSpeed * Time.deltaTime);
-	}
-
-	/**
-	 *  Uses raycasting to find mouse position on a plane perpendicular to the camera
-	 *  in given z coordinate;
-	 * 
-	 *  http://answers.unity3d.com/questions/566519/camerascreentoworldpoint-in-perspective.html
-	 */
-	private Vector3 GetWorldPositionOnPlane(Vector3 screenPosition, float z) {
-		Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-		Plane xy = new Plane(Vector3.forward, new Vector3(0, 0, z));
-		float distance;
-		xy.Raycast(ray, out distance);
-		return ray.GetPoint(distance);
-	}
-
+				transform.Translate (distance * gameObject.GetComponent<PlasmidLogic> ().currentSpeed * Time.deltaTime);
+		}
 }

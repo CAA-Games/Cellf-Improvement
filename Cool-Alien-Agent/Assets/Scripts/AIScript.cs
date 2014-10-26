@@ -24,7 +24,7 @@ public class AIScript : MonoBehaviour
 				}
 
 				if (Vector3.Distance (gameObject.transform.position, targetPos) < 0.1f) {
-						targetPos = randomTarget ();
+						targetPos = ApplicationLogic.randomTarget (transform);
 				}
 
 				Vector2 distance = targetPos - transform.position;
@@ -43,21 +43,7 @@ public class AIScript : MonoBehaviour
 
 		private Vector3 randomShotTarget ()
 		{
-				return new Vector3 (transform.position.x + minusOrPlus () * Random.Range (2f, 5.0f), transform.position.y + minusOrPlus () * Random.Range (2f, 5.0f), 0);
-		}
-
-		private Vector3 randomTarget ()
-		{
-				return new Vector3 (transform.position.x + Random.Range (-5.0f, 5.0f), transform.position.y + Random.Range (-5.0f, 5.0f), 0);
-		}
-
-		private float minusOrPlus ()
-		{
-				if (Random.Range (0, 2) == 0) {
-						return -1f;
-				} else {
-						return 1f;
-				}
+				return new Vector3 (transform.position.x + ApplicationLogic.minusOrPlus () * Random.Range (2f, 5.0f), transform.position.y + ApplicationLogic.minusOrPlus () * Random.Range (2f, 5.0f), 0);
 		}
 
 		private void plasmidOutOfSight ()

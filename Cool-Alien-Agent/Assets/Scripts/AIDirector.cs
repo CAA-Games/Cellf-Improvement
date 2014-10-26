@@ -10,15 +10,18 @@ public class AIDirector : MonoBehaviour
 		public GameObject virusPrefab;
 		public GameObject player;
 		private static int xp;
+		public int stage;
+		private int spawnInterval = 0;
+		private float timer = 1;
 
 		void Update ()
-		{
-				if (Random.Range (1, 100) == 1) {
-						spawnPlasmid ();
-				}
-				if (Random.Range (1, 10000) == 1) {
-						print ("Virus spawned!");
-						spawnVirus ();
+		{ 
+				timer -= Time.deltaTime;
+				if (stage == 0) {
+						if (timer < 0) {
+								spawnPlasmid ();
+								timer = Random.Range (1f, 2f);
+						}
 				}
 		}
 
@@ -29,7 +32,14 @@ public class AIDirector : MonoBehaviour
 
 		public static void xpUp ()
 		{
-				xp += 1;
+				xpUp (1); 
+		}
+
+		void CheckXp ()
+		{
+				if (xp > 1) {
+						stage++;	
+				}
 		}
 
 		private void spawnPlasmid ()
@@ -46,7 +56,13 @@ public class AIDirector : MonoBehaviour
 
 		private Vector3 randomLocation ()
 		{
-				return new Vector3 (Random.Range (-25f, 25f), Random.Range (-25f, 25f), 0);
+				Vector3 playerPosition = player.transform.position;
+				Vector3 randomizedPosition = ApplicationLogic.GetWorldPositionOnPlane (Vector3.zero, 0.0f);
+				randomizedPosition -= playerPosition;
+				Quaternion rotation = ApplicationLogic.randomRotation();
+				randomizedPosition = rotation * randomizedPosition;
+				randomizedPosition += playerPosition;
+				return randomizedPosition;
 		}
 
 		private void randomizeAttributes (PlasmidEffect effect)
