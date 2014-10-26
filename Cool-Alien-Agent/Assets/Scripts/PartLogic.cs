@@ -21,6 +21,10 @@ public class PartLogic : MonoBehaviour
 		{
 				currentHealth = maxHealth;
 				UpdateHealth ();
+				gameObject.particleSystem.startColor = Color.white;
+				if (infected) {
+						ApplyVirusEffect ();
+				}
 		}
 
 		void Update ()
