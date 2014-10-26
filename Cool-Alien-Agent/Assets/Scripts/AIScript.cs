@@ -4,8 +4,7 @@ using System.Collections;
 public class AIScript : MonoBehaviour
 {
 
-		public float moveSpeed = 2.0f;  // Units per secon
-		private Vector3 targetPos;
+		public Vector3 targetPos;
 		private bool plasmidShot = false;
 
 		// Use this for initialization
@@ -31,6 +30,7 @@ public class AIScript : MonoBehaviour
 				if (distance.magnitude > 1) {
 						distance = distance.normalized;
 				}
+				print (gameObject.GetComponent<PlasmidLogic> ().currentSpeed);
 				transform.Translate (distance * gameObject.GetComponent<PlasmidLogic> ().currentSpeed * Time.deltaTime);
 		}
 

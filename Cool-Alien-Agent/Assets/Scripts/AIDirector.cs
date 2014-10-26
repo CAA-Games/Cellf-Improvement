@@ -20,7 +20,6 @@ public class AIDirector : MonoBehaviour
 		public float stage2spawnInterval = 4;
 		public float stage2spawnVariance = 2;
 		public float spawnRange = 10, spawnRangeVariance = 5;
-		public float plasmidLifetime;
 
 		void Update ()
 		{ 
@@ -65,16 +64,22 @@ public class AIDirector : MonoBehaviour
 
 		private void spawnPlasmid ()
 		{
-				GameObject newPlasmid = (GameObject)Instantiate (plasmidPrefab, randomLocation (), Quaternion.identity);
+				spawnPlasmid (randomLocation ());
+		}
+
+		private void spawnPlasmid (Vector3 position)
+		{
+				GameObject newPlasmid = (GameObject)Instantiate (plasmidPrefab, position, Quaternion.identity);
 				PlasmidEffect effect = newPlasmid.gameObject.AddComponent<PlasmidEffect> ();
 				randomizeAttributes (effect);
 		}
 
 		private void spawnEnemy (int size)
 		{
-				size++;
-				//			GameObject newEnemy = (GameObject)Instantiate (enemy, randomLocation (), Quaternion.identity);
-				
+				GameObject newEnemy = (GameObject)Instantiate (enemy, randomLocation (), Quaternion.identity);
+				for (int i = 0; i < size; i++) {
+						spawnPlasmid (newEnemy.transform.position);
+				}
 		}
 
 		private void spawnVirus ()
@@ -90,6 +95,7 @@ public class AIDirector : MonoBehaviour
 				randomizedPosition = ApplicationLogic.randomRotation () * randomizedPosition;
 				randomizedPosition *= Random.Range (spawnRange, spawnRange + spawnRangeVariance);
 				randomizedPosition += playerPosition;
+				randomizedPosition = new Vector3 (randomizedPosition.x, randomizedPosition.y, 0);
 				return randomizedPosition;
 		}
 

@@ -11,15 +11,6 @@ public class PlasmidEffect : MonoBehaviour {
 	public float length = 0;
 	public GameObject appearance;
 
-	// Use this for initialization
-	void Start () {
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
 	public void updateValues(float speed, float green, float blue, float red, float size, float length, GameObject appearance){
 		this.speed = speed;
 		this.green = green;
