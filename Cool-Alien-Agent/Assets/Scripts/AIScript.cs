@@ -30,7 +30,6 @@ public class AIScript : MonoBehaviour
 				if (distance.magnitude > 1) {
 						distance = distance.normalized;
 				}
-				print (gameObject.GetComponent<PlasmidLogic> ().currentSpeed);
 				transform.Translate (distance * gameObject.GetComponent<PlasmidLogic> ().currentSpeed * Time.deltaTime);
 		}
 

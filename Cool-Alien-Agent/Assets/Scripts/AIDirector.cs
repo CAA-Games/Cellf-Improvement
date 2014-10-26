@@ -11,14 +11,14 @@ public class AIDirector : MonoBehaviour
 		public GameObject player;
 		public GameObject enemy;
 		private int playerSize;
-		private static int xp;
+		public static int xp;
 		public int stage;
-		private int spawnInterval = 0;
 		private float timer = 1;
+		public float stage0spawnRangeModifier = 0.5f;
+		public float stage0spawnInterval = 4;
+		public float stage0spawnVariance = 2;
 		public float stage1spawnInterval = 4;
 		public float stage1spawnVariance = 2;
-		public float stage2spawnInterval = 4;
-		public float stage2spawnVariance = 2;
 		public float spawnRange = 10, spawnRangeVariance = 5;
 
 		void Update ()
@@ -27,8 +27,8 @@ public class AIDirector : MonoBehaviour
 				switch (stage) {
 				case 0:
 						if (timer < 0) {
-								spawnPlasmid ();
-								timer = Random.Range (stage1spawnInterval, stage1spawnInterval + stage1spawnVariance);
+								spawnPlasmid (stage0spawnRangeModifier);
+								timer = Random.Range (stage0spawnInterval, stage0spawnInterval + stage0spawnVariance);
 						}
 						break;
 				case 1:
@@ -38,9 +38,10 @@ public class AIDirector : MonoBehaviour
 						}
 						break;
 				}
-				
-				playerSize = player.GetComponent<PlasmidLogic> ().cells.Count;
-				CheckXp ();
+				if (Time.frameCount % 60 == 0) {
+						playerSize = player.GetComponent<PlasmidLogic> ().cells.Count;
+						CheckXp ();
+				}
 		}
 
 		public static void xpUp (string tag, int amount)
@@ -52,19 +53,25 @@ public class AIDirector : MonoBehaviour
 
 		public static void xpUp (string tag)
 		{
-				xpUp (tag, 1); 
+				xpUp (tag, 10); 
 		}
 
 		void CheckXp ()
 		{
-				if (xp > 3 && stage == 0) {
+				print ("Experience: " + xp);
+				if (xp > 30 && stage == 0) {
 						stage++;	
 				}
+		}
+	
+		private void spawnPlasmid (float stage0spawnRangeModifier)
+		{
+				spawnPlasmid (randomLocation (stage0spawnRangeModifier));
 		}
 
 		private void spawnPlasmid ()
 		{
-				spawnPlasmid (randomLocation ());
+				spawnPlasmid (randomLocation (1));
 		}
 
 		private void spawnPlasmid (Vector3 position)
@@ -76,7 +83,7 @@ public class AIDirector : MonoBehaviour
 
 		private void spawnEnemy (int size)
 		{
-				GameObject newEnemy = (GameObject)Instantiate (enemy, randomLocation (), Quaternion.identity);
+				GameObject newEnemy = (GameObject)Instantiate (enemy, randomLocation (1), Quaternion.identity);
 				for (int i = 0; i < size; i++) {
 						spawnPlasmid (newEnemy.transform.position);
 				}
@@ -84,16 +91,16 @@ public class AIDirector : MonoBehaviour
 
 		private void spawnVirus ()
 		{
-				GameObject newVirus = (GameObject)Instantiate (virusPrefab, randomLocation (), Quaternion.identity);
+				GameObject newVirus = (GameObject)Instantiate (virusPrefab, randomLocation (1), Quaternion.identity);
 		}
 
-		private Vector3 randomLocation ()
+		private Vector3 randomLocation (float rangeModifier)
 		{
 				Vector3 playerPosition = player.transform.position;
 				Vector3 randomizedPosition = ApplicationLogic.GetWorldPositionOnPlane (Vector3.zero, 0.0f);
 				randomizedPosition -= playerPosition;
 				randomizedPosition = ApplicationLogic.randomRotation () * randomizedPosition;
-				randomizedPosition *= Random.Range (spawnRange, spawnRange + spawnRangeVariance);
+				randomizedPosition *= Random.Range (spawnRange, spawnRange + spawnRangeVariance) * rangeModifier;
 				randomizedPosition += playerPosition;
 				randomizedPosition = new Vector3 (randomizedPosition.x, randomizedPosition.y, 0);
 				return randomizedPosition;
