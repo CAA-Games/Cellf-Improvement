@@ -9,7 +9,7 @@ public class AIDirector : MonoBehaviour
 		public GameObject plasmidPrefab;
 		public GameObject virusPrefab;
 		public GameObject player;
-		private static float xp;
+		private static int xp;
 
 		void Update ()
 		{
@@ -22,9 +22,14 @@ public class AIDirector : MonoBehaviour
 				}
 		}
 
-		public static void xpUp (float amount)
+		public static void xpUp (int amount)
 		{
 				xp += amount;
+		}
+
+		public static void xpUp ()
+		{
+				xp += 1;
 		}
 
 		private void spawnPlasmid ()
