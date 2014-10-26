@@ -10,13 +10,6 @@ public class SmoothFollow : MonoBehaviour
 		public float smoothness;
 		public float mousiness;
 
-		// Use this for initialization
-		void Start ()
-		{
-	
-		}
-	
-		// Update is called once per frame
 		void Update ()
 		{
 				setZ ();
