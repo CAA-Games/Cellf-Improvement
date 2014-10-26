@@ -54,7 +54,7 @@ public class PlasmidLogic : MonoBehaviour
 		private GameObject newChildPart (PlasmidEffect plasmid)
 		{
 				GameObject newPart = (GameObject)Instantiate (plasmid.appearance, randomMiddleLocation (), Quaternion.identity);
-				newPart.GetComponent<PartLogic> ().player = gameObject;
+				newPart.GetComponent<CellLogic> ().player = gameObject;
 				newPart.transform.parent = transform;
 				newPart.tag = gameObject.tag;
 				

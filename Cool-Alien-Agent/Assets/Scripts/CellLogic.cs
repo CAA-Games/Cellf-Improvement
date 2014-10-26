@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PartLogic : MonoBehaviour
+public class CellLogic : MonoBehaviour
 {
 		public GameObject explosion;
 		public GameObject player; // transform. parent
