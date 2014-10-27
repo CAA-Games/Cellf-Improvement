@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AIScript : MonoBehaviour
+public class EnemyAI : MonoBehaviour
 {
 
 		public Vector3 targetPos;
