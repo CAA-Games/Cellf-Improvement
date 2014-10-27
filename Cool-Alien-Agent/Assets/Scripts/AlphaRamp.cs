@@ -25,7 +25,7 @@ public class AlphaRamp : MonoBehaviour
 						if (rampOut && currentAlpha >= 0.90f) {
 								increment = -0.2f;
 						}
-				} else if (startOverText && AIDirector.stage < 5) {
+				} else if (startOverText) {
 						startOverText.SetActive (true);
 				}
 				if (gameObject.GetComponent<StartOver> ()) {

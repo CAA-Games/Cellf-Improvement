@@ -12,7 +12,7 @@ public class AIDirector : MonoBehaviour
 		public GameObject enemy;
 		private int playerSize;
 		public static int xp;
-		public static int stage = 3;
+		public static int stage = 0;
 		public float plasmidTimer = 1;
 		public float enemyTimer = 1;
 		public float spawnRange = 10, spawnRangeVariance = 5;
