@@ -88,7 +88,7 @@ public class AIDirector : MonoBehaviour
 		{
 				if (xp > 30 && stage == 0) {
 						stage++;	
-				} else if (xp > 110 && stage == 1) {
+				} else if (xp > 200 && stage == 1) {
 						stage++;
 				}
 		}

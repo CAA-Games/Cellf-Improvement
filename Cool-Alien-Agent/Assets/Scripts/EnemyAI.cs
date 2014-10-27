@@ -18,7 +18,6 @@ public class EnemyAI : MonoBehaviour
 		{
 				if (Random.Range (1, 1000) == 1) {
 						this.gameObject.SendMessage ("dropPlasmid", randomShotTarget ());
-						plasmidShot = true;
 						Invoke ("plasmidOutOfSight", 2);
 				}
 
@@ -33,9 +32,9 @@ public class EnemyAI : MonoBehaviour
 				transform.Translate (distance * gameObject.GetComponent<BacteriumLogic> ().currentSpeed * Time.deltaTime);
 		}
 
-		void OnTriggerEnter2D (Collider2D col)
+		void OnTriggerStay2D (Collider2D col)
 		{
-				if (col.tag == "Plasmid" && !plasmidShot) {
+				if (col.tag == "Plasmid") {
 						targetPos = col.gameObject.transform.position;
 				}
 		}
