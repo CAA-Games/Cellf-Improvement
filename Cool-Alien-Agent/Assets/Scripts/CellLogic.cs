@@ -123,6 +123,7 @@ public class CellLogic : MonoBehaviour
 						}
 				}
 				gameObject.particleSystem.emissionRate = (10f - currentHealth / maxHealth * 10f);
-				
+				float scaleModifier = (1f - currentHealth / maxHealth) / 4f;
+				transform.GetChild (0).transform.localScale = new Vector3 (1 - scaleModifier, 1 - scaleModifier, 1);
 		}
 }
