@@ -25,6 +25,6 @@ public class SmoothFollow : MonoBehaviour
 
 		public void setZ ()
 		{
-				z = Math.Min (((float)Math.Log ((objectToFollow.GetComponent<PlasmidLogic> ().cells.Count)) / 2) * -20f, -20);
+				z = Math.Min (((float)Math.Log ((objectToFollow.GetComponent<BacteriumLogic> ().cells.Count)) / 2) * -20f, -20);
 		}
 }

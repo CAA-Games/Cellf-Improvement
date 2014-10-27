@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-public class PlasmidLogic : MonoBehaviour
+public class BacteriumLogic : MonoBehaviour
 {
 		public GameObject startingPlasmid;
 		public int startingPlasmids;

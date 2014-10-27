@@ -44,7 +44,7 @@ public class AIDirector : MonoBehaviour
 				
 				}
 				if (Time.frameCount % 60 == 0) {
-						playerSize = player.GetComponent<PlasmidLogic> ().cells.Count;
+						playerSize = player.GetComponent<BacteriumLogic> ().cells.Count;
 						CheckXp ();
 				}
 		}

@@ -41,7 +41,7 @@ public class CellLogic : MonoBehaviour
 		{
 				if (col.gameObject.tag == "Plasmid") {
 						AIDirector.xpUp (gameObject.tag);
-						PlasmidLogic logic = player.GetComponent<PlasmidLogic> ();
+						BacteriumLogic logic = player.GetComponent<BacteriumLogic> ();
 						logic.addPlasmid (col.gameObject.GetComponent<PlasmidEffect> ());
 						Destroy (col.gameObject);
 				} else if (col.gameObject.tag == "Virus") {

@@ -30,7 +30,7 @@ public class AIScript : MonoBehaviour
 				if (distance.magnitude > 1) {
 						distance = distance.normalized;
 				}
-				transform.Translate (distance * gameObject.GetComponent<PlasmidLogic> ().currentSpeed * Time.deltaTime);
+				transform.Translate (distance * gameObject.GetComponent<BacteriumLogic> ().currentSpeed * Time.deltaTime);
 		}
 
 		void OnTriggerEnter2D (Collider2D col)
