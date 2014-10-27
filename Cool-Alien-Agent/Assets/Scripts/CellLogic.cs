@@ -54,6 +54,9 @@ public class CellLogic : MonoBehaviour
 						audio.Play ();
 						TakeDamage (1.0f);
 						AIDirector.xpUp (gameObject.tag, 1);
+				} else if (col.gameObject.transform.parent != transform.parent) {
+						audio.Play ();
+						TakeDamage (1.0f);
 				}
 		}
 
