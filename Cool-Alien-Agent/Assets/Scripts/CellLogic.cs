@@ -40,10 +40,12 @@ public class CellLogic : MonoBehaviour
 		void OnCollisionEnter2D (Collision2D col)
 		{
 				if (col.gameObject.tag == "Plasmid") {
-						AIDirector.xpUp (gameObject.tag);
-						BacteriumLogic logic = player.GetComponent<BacteriumLogic> ();
-						logic.addPlasmid (col.gameObject.GetComponent<PlasmidEffect> ());
-						Destroy (col.gameObject);
+						if (col.gameObject.GetComponent<PlasmidLogic> ().canBePickedUp) {
+								AIDirector.xpUp (gameObject.tag);
+								BacteriumLogic logic = player.GetComponent<BacteriumLogic> ();
+								logic.addPlasmid (col.gameObject.GetComponent<PlasmidEffect> ());
+								Destroy (col.gameObject);
+						}
 				} else if (col.gameObject.tag == "Virus") {
 						InfectCellWithVirus (col.gameObject);
 						AIDirector.xpUp (gameObject.tag, 10);
