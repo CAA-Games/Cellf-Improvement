@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 42aa1854e8910b740be0972e48209b32
+guid: da877654bd71f43e0a916e213d6a7a24
 TextureImporter:
   fileIDToRecycleName:
-    21300000: in03_128
+    21300000: outer-semibig-01
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -26,9 +26,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: 1
+    aniso: -1
     mipBias: -1
-    wrapMode: 1
+    wrapMode: -1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
