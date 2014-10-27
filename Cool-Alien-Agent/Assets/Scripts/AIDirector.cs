@@ -13,42 +13,36 @@ public class AIDirector : MonoBehaviour
 		private int playerSize;
 		public static int xp;
 		public int stage;
-		private float timer = 1;
-		public float stage0spawnRangeModifier = 0.5f;
-		public float stage0spawnInterval = 4;
-		public float stage0spawnVariance = 2;
-		public float stage1spawnInterval = 4;
-		public float stage1spawnVariance = 2;
+		public float plasmidTimer = 1;
+		public float enemyTimer = 1;
 		public float spawnRange = 10, spawnRangeVariance = 5;
-		private bool plasmidSpawned = false;
+		public bool virusActive = false;
+		public bool nobodyHasBeenInfected = true;
 
 		void Update ()
 		{ 
-				timer -= Time.deltaTime;
-				switch (stage) {
-				case 0:
-						if (timer < 0) {
-								spawnPlasmid (stage0spawnRangeModifier);
-								timer = Random.Range (stage0spawnInterval, stage0spawnInterval + stage0spawnVariance);
+				plasmidTimer -= Time.deltaTime;
+				enemyTimer -= Time.deltaTime;
+				if (stage == 0) {
+						if (plasmidTimer < 0) {
+								spawnPlasmid (0.5);
+								plasmidTimer = Random.Range (4, 8);
 						}
-						break;
-				case 1:
-						if (timer < 3 && !plasmidSpawned) {
+				} else if (stage == 1) {
+						if (plasmidTimer < 0) {
 								spawnPlasmid (1);
-								plasmidSpawned = true;
+								plasmidTimer = Random.Range (8, 10);
 						}
-						if (timer < 0) {
+						if (enemyTimer < 0) {
 								spawnEnemy (Mathf.Max (Random.Range (0, playerSize - 1), 0));
-								timer = Random.Range (4f, 7f);
-								plasmidSpawned = false;
+								plasmidTimer = Random.Range (4f, 9f);
 						}
-						break;
-				case 2:
-						if (timer < 0) {
+				} else if (stage == 2) {
+						if (!virusActive && nobodyHasBeenInfected) {
 								spawnVirus ();
-								timer = Random.Range (20f, 30f);
+								virusActive = true;
 						}
-						break;
+				
 				}
 				if (Time.frameCount % 60 == 0) {
 						playerSize = player.GetComponent<PlasmidLogic> ().cells.Count;
