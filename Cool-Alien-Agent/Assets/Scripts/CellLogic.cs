@@ -51,6 +51,7 @@ public class CellLogic : MonoBehaviour
 						AIDirector.xpUp (gameObject.tag, 10);
 						AIDirector.infectionHappened ();
 				} else if (col.gameObject.tag != gameObject.tag) {
+						audio.Play ();
 						TakeDamage (1.0f);
 						AIDirector.xpUp (gameObject.tag, 1);
 				}
