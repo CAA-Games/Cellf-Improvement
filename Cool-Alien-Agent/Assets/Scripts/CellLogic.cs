@@ -106,6 +106,7 @@ public class CellLogic : MonoBehaviour
 		private void UpdateHealth ()
 		{
 				if (currentHealth < 0) {
+						Destroy (Instantiate (explosion, transform.position, Quaternion.identity), 15.0f);
 						if (infected) {
 								SpreadVirus ();
 						}
@@ -114,7 +115,6 @@ public class CellLogic : MonoBehaviour
 								
 						} else {
 								transform.parent.gameObject.SendMessage ("RemoveCell", gameObject);
-								Destroy (Instantiate (explosion, transform.position, Quaternion.identity), 15.0f);
 								Destroy (gameObject);	
 						}
 				}
