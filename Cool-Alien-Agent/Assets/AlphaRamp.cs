@@ -23,5 +23,8 @@ public class AlphaRamp : MonoBehaviour
 				} else if (startOverText) {
 						startOverText.SetActive (true);
 				}
+				if (gameObject.GetComponent<StartOver> ()) {
+						gameObject.GetComponent<StartOver> ().enabled = true;
+				}
 		}
 }
