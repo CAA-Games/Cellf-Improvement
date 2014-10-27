@@ -14,7 +14,9 @@ public class AlphaRamp : MonoBehaviour
 
 		void Update ()
 		{
-				currentAlpha += increment * Time.deltaTime;
-				renderer.material.color = new Color (renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, currentAlpha);
+				if (currentAlpha <= 1) {
+						currentAlpha += increment * Time.deltaTime;
+						renderer.material.color = new Color (renderer.material.color.r, renderer.material.color.g, renderer.material.color.b, currentAlpha);
+				}
 		}
 }

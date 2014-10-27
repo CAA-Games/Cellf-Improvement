@@ -35,13 +35,20 @@ public class AIDirector : MonoBehaviour
 						}
 						if (enemyTimer < 0) {
 								spawnEnemy (Mathf.Max (Random.Range (0, playerSize - 1), 0));
-								enemyTimer = Random.Range (4f, 9f);
+								enemyTimer = Random.Range (2f, 6f);
 						}
 				} else if (stage == 2) {
 						if (!virusActive && noInfectionsYet) {
 								spawnVirus ();
 						}
-				
+						if (plasmidTimer < 0) {
+								spawnPlasmid (1);
+								plasmidTimer = Random.Range (8, 10);
+						}
+						if (enemyTimer < 0) {
+								spawnEnemy (Random.Range (1, playerSize + 3));
+								enemyTimer = Random.Range (1f, 5f);
+						}
 				}
 				if (Time.frameCount % 60 == 0 && player) {
 						playerSize = player.GetComponent<BacteriumLogic> ().cells.Count;
@@ -51,6 +58,7 @@ public class AIDirector : MonoBehaviour
 
 		public static void xpUp (string tag, int amount)
 		{
+				print ("XP: " + xp);
 				if (tag.StartsWith ("Player")) {
 						xp += amount;
 				}
