@@ -25,13 +25,13 @@ public class AIDirector : MonoBehaviour
 				enemyTimer -= Time.deltaTime;
 				if (stage == 0) {
 						if (plasmidTimer < 0) {
-								spawnPlasmid (0.5f);
-								plasmidTimer = Random.Range (4, 8);
+								spawnPlasmid (0.6f);
+								plasmidTimer = Random.Range (4f, 8f);
 						}
 				} else if (stage == 1) {
 						if (plasmidTimer < 0) {
 								spawnPlasmid (1);
-								plasmidTimer = Random.Range (8, 10);
+								plasmidTimer = Random.Range (5f, 9f);
 						}
 						if (enemyTimer < 0) {
 								spawnEnemy (Mathf.Max (Random.Range (0, playerSize - 1), 0));
@@ -43,7 +43,7 @@ public class AIDirector : MonoBehaviour
 						}
 						if (plasmidTimer < 0) {
 								spawnPlasmid (1);
-								plasmidTimer = Random.Range (8, 10);
+								plasmidTimer = Random.Range (8f, 10f);
 						}
 						if (enemyTimer < 0) {
 								spawnEnemy (Random.Range (1, playerSize + 3));
