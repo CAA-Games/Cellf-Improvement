@@ -8,11 +8,12 @@ public class AlphaRamp : MonoBehaviour
 		public float increment;
 		public float startingAlpha = -2;
 		private float currentAlpha;
+		public bool activeAtStart = false;
 
 		void Start ()
 		{
 				currentAlpha = startingAlpha;
-				gameObject.SetActive (false);
+				gameObject.SetActive (activeAtStart);
 		}
 
 		void Update ()
