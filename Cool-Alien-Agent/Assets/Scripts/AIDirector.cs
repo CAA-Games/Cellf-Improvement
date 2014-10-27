@@ -53,7 +53,7 @@ public class AIDirector : MonoBehaviour
 						noInfectionsYet = false;
 						virusActive = false;
 						stage++;		
-						GameObject boss = spawnEnemy (2);
+						GameObject boss = spawnEnemy (50);
 						boss.AddComponent<BossLogic> ();
 				} else if (stage == 5) {
 						if (!virusActive && noInfectionsYet) {
