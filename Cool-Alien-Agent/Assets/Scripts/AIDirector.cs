@@ -49,6 +49,11 @@ public class AIDirector : MonoBehaviour
 								spawnEnemy (Random.Range (1, playerSize + 3));
 								enemyTimer = Random.Range (1f, 5f);
 						}
+				} else if (stage == 3) {
+						stage++;		
+						GameObject boss = spawnEnemy (50);
+						boss.AddComponent<BossLogic> ();
+						
 				}
 				if (Time.frameCount % 60 == 0 && player) {
 						playerSize = player.GetComponent<BacteriumLogic> ().cells.Count;
@@ -59,14 +64,15 @@ public class AIDirector : MonoBehaviour
 		public static void xpUp (string tag, int amount)
 		{
 				print ("XP: " + xp);
-				if (tag.StartsWith ("Player")) {
-						xp += amount;
-				}
+				xp += amount;
+				
 		}
 
 		public static void xpUp (string tag)
 		{
-				xpUp (tag, 10); 
+				if (tag.StartsWith ("Player")) {
+						xpUp (tag, 10); 
+				}
 		}
 
 		public static void infectionHappened ()
@@ -90,6 +96,8 @@ public class AIDirector : MonoBehaviour
 						stage++;	
 				} else if (xp > 200 && stage == 1) {
 						stage++;
+				} else if (xp > 400 && stage == 2) {
+						stage++;
 				}
 		}
 	
@@ -110,12 +118,13 @@ public class AIDirector : MonoBehaviour
 				randomizeAttributes (effect);
 		}
 
-		private void spawnEnemy (int size)
+		private GameObject spawnEnemy (int size)
 		{
 				GameObject newEnemy = (GameObject)Instantiate (enemy, randomLocation (1), Quaternion.identity);
 				for (int i = 0; i < size; i++) {
 						spawnPlasmid (newEnemy.transform.position);
 				}
+				return newEnemy;
 		}
 
 		private void spawnVirus ()
