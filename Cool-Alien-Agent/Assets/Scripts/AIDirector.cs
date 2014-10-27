@@ -43,7 +43,7 @@ public class AIDirector : MonoBehaviour
 						}
 				
 				}
-				if (Time.frameCount % 60 == 0) {
+				if (Time.frameCount % 60 == 0 && player) {
 						playerSize = player.GetComponent<BacteriumLogic> ().cells.Count;
 						CheckXp ();
 				}
@@ -69,6 +69,11 @@ public class AIDirector : MonoBehaviour
 		public static void virusDecayed ()
 		{
 				virusActive = false;
+		}
+
+		public static void PlayerDied ()
+		{
+
 		}
 
 		void CheckXp ()
@@ -113,7 +118,12 @@ public class AIDirector : MonoBehaviour
 
 		private Vector3 randomLocation (float rangeModifier)
 		{
-				Vector3 playerPosition = player.transform.position;
+				Vector3 playerPosition;
+				if (player) {
+						playerPosition = player.transform.position;
+				} else {
+						playerPosition = new Vector3 (transform.position.x, transform.position.y, 0);
+				}
 				Vector3 randomizedPosition = ApplicationLogic.GetWorldPositionOnPlane (Vector3.zero, 0.0f);
 				randomizedPosition -= playerPosition;
 				randomizedPosition = ApplicationLogic.randomRotation () * randomizedPosition;
@@ -125,7 +135,7 @@ public class AIDirector : MonoBehaviour
 
 		private void randomizeAttributes (PlasmidEffect effect)
 		{
-	//			effect.updateValues (Random.Range (-1f, 2f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), partPrefabs [UnityEngine.Random.Range (0, partPrefabs.Count)]);
-		effect.updateValues (Random.Range (-0.1f, 0.1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), partPrefabs [UnityEngine.Random.Range (0, partPrefabs.Count)]);
+				//			effect.updateValues (Random.Range (-1f, 2f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), partPrefabs [UnityEngine.Random.Range (0, partPrefabs.Count)]);
+				effect.updateValues (Random.Range (-0.1f, 0.1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), partPrefabs [UnityEngine.Random.Range (0, partPrefabs.Count)]);
 		}
 }

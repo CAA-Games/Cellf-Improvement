@@ -12,13 +12,16 @@ public class SmoothFollow : MonoBehaviour
 
 		void Update ()
 		{
-				setZ ();
+				
 				if (objectToFollow) {	
+						setZ ();
 						Vector3 targetPosition = objectToFollow.GetComponent<MoveToClickPersp> ().targetPos;
 						targetPosition = Vector3.Lerp (objectToFollow.transform.position, targetPosition, mousiness);
 						Vector3 newPosition = new Vector3 (targetPosition.x, targetPosition.y, z);
 						gameObject.transform.position = Vector3.Lerp (gameObject.transform.position, newPosition, smoothness);						
 				} else {
+						print ("DEAD");
+						gameObject.GetComponent<WastedCamera> ().enabled = true;
 						Destroy (this);
 				}
 		}
