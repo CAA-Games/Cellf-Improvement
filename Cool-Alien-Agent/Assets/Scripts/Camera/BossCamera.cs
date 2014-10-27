@@ -3,7 +3,7 @@ using System.Collections;
 
 public class BossCamera : MonoBehaviour
 {
-
+		public GameObject congratulations;
 		public GameObject boss;
 		public GameObject player;
 		public float z = -20;
@@ -17,10 +17,18 @@ public class BossCamera : MonoBehaviour
 						Vector3 targetPosition = Vector3.Lerp (player.transform.position, boss.transform.position, bossiness);
 						Vector3 newPosition = new Vector3 (targetPosition.x, targetPosition.y, z);
 						gameObject.transform.position = Vector3.Lerp (gameObject.transform.position, newPosition, smoothness);						
-				} else {
+				} else if (!player) {
 						print ("DEAD");
 						gameObject.GetComponent<WastedCamera> ().enabled = true;
-						Destroy (this);
+						this.enabled = false;
+				}
+				if (boss.GetComponent<BacteriumLogic> ().cells.Count < 1) {
+						Destroy (boss);
+						gameObject.GetComponent<SmoothFollow> ().enabled = true;
+						congratulations.SetActive (true);
+						congratulations.GetComponent<AlphaRamp> ().activeAtStart = true;
+						congratulations.GetComponent<AlphaRamp> ().enabled = true;
+						this.enabled = false;
 				}
 		}
 

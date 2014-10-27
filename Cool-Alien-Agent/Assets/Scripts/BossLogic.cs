@@ -12,7 +12,6 @@ public class BossLogic : MonoBehaviour
 
 		void Start ()
 		{
-				
 				anchorPosition = transform.position;
 		}
 
@@ -56,5 +55,10 @@ public class BossLogic : MonoBehaviour
 		void MoveToAnchorPosition ()
 		{
 				transform.position = Vector3.Lerp (transform.position, anchorPosition, 0.08f);
+		}
+
+		void OnDestroy ()
+		{
+				AIDirector.xpUp ("Boss");
 		}
 }
