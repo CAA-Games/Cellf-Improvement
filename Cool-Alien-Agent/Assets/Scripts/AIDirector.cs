@@ -13,51 +13,52 @@ public class AIDirector : MonoBehaviour
 		private int playerSize;
 		public static int xp;
 		public int stage;
-		private float timer = 1;
-		public float stage0spawnRangeModifier = 0.5f;
-		public float stage0spawnInterval = 4;
-		public float stage0spawnVariance = 2;
-		public float stage1spawnInterval = 4;
-		public float stage1spawnVariance = 2;
+		public float plasmidTimer = 1;
+		public float enemyTimer = 1;
 		public float spawnRange = 10, spawnRangeVariance = 5;
-		private bool plasmidSpawned = false;
+		public static bool virusActive = false;
+		public static bool noInfectionsYet = true;
 
 		void Update ()
 		{ 
-				timer -= Time.deltaTime;
-				switch (stage) {
-				case 0:
-						if (timer < 0) {
-								spawnPlasmid (stage0spawnRangeModifier);
-								timer = Random.Range (stage0spawnInterval, stage0spawnInterval + stage0spawnVariance);
+				plasmidTimer -= Time.deltaTime;
+				enemyTimer -= Time.deltaTime;
+				if (stage == 0) {
+						if (plasmidTimer < 0) {
+								spawnPlasmid (0.6f);
+								plasmidTimer = Random.Range (4f, 8f);
 						}
-						break;
-				case 1:
-						if (timer < 3 && !plasmidSpawned) {
+				} else if (stage == 1) {
+						if (plasmidTimer < 0) {
 								spawnPlasmid (1);
-								plasmidSpawned = true;
+								plasmidTimer = Random.Range (5f, 9f);
 						}
-						if (timer < 0) {
+						if (enemyTimer < 0) {
 								spawnEnemy (Mathf.Max (Random.Range (0, playerSize - 1), 0));
-								timer = Random.Range (4f, 7f);
-								plasmidSpawned = false;
+								enemyTimer = Random.Range (2f, 6f);
 						}
-						break;
-				case 2:
-						if (timer < 0) {
+				} else if (stage == 2) {
+						if (!virusActive && noInfectionsYet) {
 								spawnVirus ();
-								timer = Random.Range (20f, 30f);
 						}
-						break;
+						if (plasmidTimer < 0) {
+								spawnPlasmid (1);
+								plasmidTimer = Random.Range (8f, 10f);
+						}
+						if (enemyTimer < 0) {
+								spawnEnemy (Random.Range (1, playerSize + 3));
+								enemyTimer = Random.Range (1f, 5f);
+						}
 				}
-				if (Time.frameCount % 60 == 0) {
-						playerSize = player.GetComponent<PlasmidLogic> ().cells.Count;
+				if (Time.frameCount % 60 == 0 && player) {
+						playerSize = player.GetComponent<BacteriumLogic> ().cells.Count;
 						CheckXp ();
 				}
 		}
 
 		public static void xpUp (string tag, int amount)
 		{
+				print ("XP: " + xp);
 				if (tag.StartsWith ("Player")) {
 						xp += amount;
 				}
@@ -66,6 +67,21 @@ public class AIDirector : MonoBehaviour
 		public static void xpUp (string tag)
 		{
 				xpUp (tag, 10); 
+		}
+
+		public static void infectionHappened ()
+		{
+				noInfectionsYet = false;
+		}
+
+		public static void virusDecayed ()
+		{
+				virusActive = false;
+		}
+
+		public static void PlayerDied ()
+		{
+
 		}
 
 		void CheckXp ()
@@ -77,9 +93,9 @@ public class AIDirector : MonoBehaviour
 				}
 		}
 	
-		private void spawnPlasmid (float stage0spawnRangeModifier)
+		private void spawnPlasmid (float range)
 		{
-				spawnPlasmid (randomLocation (stage0spawnRangeModifier));
+				spawnPlasmid (randomLocation (range));
 		}
 
 		private void spawnPlasmid ()
@@ -104,12 +120,18 @@ public class AIDirector : MonoBehaviour
 
 		private void spawnVirus ()
 		{
-				GameObject newVirus = (GameObject)Instantiate (virusPrefab, randomLocation (1), Quaternion.identity);
+				Instantiate (virusPrefab, randomLocation (1), Quaternion.identity);
+				virusActive = true;
 		}
 
 		private Vector3 randomLocation (float rangeModifier)
 		{
-				Vector3 playerPosition = player.transform.position;
+				Vector3 playerPosition;
+				if (player) {
+						playerPosition = player.transform.position;
+				} else {
+						playerPosition = new Vector3 (transform.position.x, transform.position.y, 0);
+				}
 				Vector3 randomizedPosition = ApplicationLogic.GetWorldPositionOnPlane (Vector3.zero, 0.0f);
 				randomizedPosition -= playerPosition;
 				randomizedPosition = ApplicationLogic.randomRotation () * randomizedPosition;
@@ -121,6 +143,7 @@ public class AIDirector : MonoBehaviour
 
 		private void randomizeAttributes (PlasmidEffect effect)
 		{
-				effect.updateValues (Random.Range (-1f, 2f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), partPrefabs [UnityEngine.Random.Range (0, partPrefabs.Count)]);
+				//			effect.updateValues (Random.Range (-1f, 2f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), partPrefabs [UnityEngine.Random.Range (0, partPrefabs.Count)]);
+				effect.updateValues (Random.Range (-0.1f, 0.1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), Random.Range (-1f, 1f), partPrefabs [UnityEngine.Random.Range (0, partPrefabs.Count)]);
 		}
 }

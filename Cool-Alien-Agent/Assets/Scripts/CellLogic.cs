@@ -14,6 +14,8 @@ public class CellLogic : MonoBehaviour
 		private GameObject virus;
 		// Amount of health damage cell takes per second
 		public float virusResistance = 1.0f;
+		// In percent (0-100)
+		public float plasmidDropChance = 50.0f;
 
 	#region Unity callbacks
 
@@ -38,16 +40,23 @@ public class CellLogic : MonoBehaviour
 		void OnCollisionEnter2D (Collision2D col)
 		{
 				if (col.gameObject.tag == "Plasmid") {
-						AIDirector.xpUp (gameObject.tag);
-						PlasmidLogic logic = player.GetComponent<PlasmidLogic> ();
-						logic.addPlasmid (col.gameObject.GetComponent<PlasmidEffect> ());
-						Destroy (col.gameObject);
+						if (col.gameObject.GetComponent<PlasmidLogic> ().canBePickedUp) {
+								AIDirector.xpUp (gameObject.tag);
+								BacteriumLogic logic = player.GetComponent<BacteriumLogic> ();
+								logic.addPlasmid (col.gameObject.GetComponent<PlasmidEffect> ());
+								Destroy (col.gameObject);
+						}
 				} else if (col.gameObject.tag == "Virus") {
 						InfectCellWithVirus (col.gameObject);
 						AIDirector.xpUp (gameObject.tag, 10);
+						AIDirector.infectionHappened ();
 				} else if (col.gameObject.tag != gameObject.tag) {
+						audio.Play ();
 						TakeDamage (1.0f);
 						AIDirector.xpUp (gameObject.tag, 1);
+				} else if (col.gameObject.transform.parent != transform.parent) {
+						audio.Play ();
+						TakeDamage (1.0f);
 				}
 		}
 
@@ -101,13 +110,20 @@ public class CellLogic : MonoBehaviour
 		private void UpdateHealth ()
 		{
 				if (currentHealth < 0) {
+						Destroy (Instantiate (explosion, transform.position, Quaternion.identity), 15.0f);
 						if (infected) {
 								SpreadVirus ();
 						}
-						transform.parent.gameObject.SendMessage ("RemoveCell", gameObject);
-						Destroy (Instantiate (explosion, transform.position, Quaternion.identity), 15.0f);
-						Destroy (gameObject);		
+						if (Random.Range (0f, 100f) <= plasmidDropChance && !infected) {
+								transform.parent.gameObject.SendMessage ("dropPlasmid", gameObject);
+								
+						} else {
+								transform.parent.gameObject.SendMessage ("RemoveCell", gameObject);
+								Destroy (gameObject);	
+						}
 				}
 				gameObject.particleSystem.emissionRate = (10f - currentHealth / maxHealth * 10f);
+				float scaleModifier = (1f - currentHealth / maxHealth) / 4f;
+				transform.GetChild (0).transform.localScale = new Vector3 (1 - scaleModifier, 1 - scaleModifier, 1);
 		}
 }
