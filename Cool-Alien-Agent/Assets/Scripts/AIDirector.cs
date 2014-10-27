@@ -16,8 +16,8 @@ public class AIDirector : MonoBehaviour
 		public float plasmidTimer = 1;
 		public float enemyTimer = 1;
 		public float spawnRange = 10, spawnRangeVariance = 5;
-		public bool virusActive = false;
-		public bool nobodyHasBeenInfected = true;
+		public static bool virusActive = false;
+		public static bool noInfectionsYet = true;
 
 		void Update ()
 		{ 
@@ -25,7 +25,7 @@ public class AIDirector : MonoBehaviour
 				enemyTimer -= Time.deltaTime;
 				if (stage == 0) {
 						if (plasmidTimer < 0) {
-								spawnPlasmid (0.5);
+								spawnPlasmid (0.5f);
 								plasmidTimer = Random.Range (4, 8);
 						}
 				} else if (stage == 1) {
@@ -35,12 +35,11 @@ public class AIDirector : MonoBehaviour
 						}
 						if (enemyTimer < 0) {
 								spawnEnemy (Mathf.Max (Random.Range (0, playerSize - 1), 0));
-								plasmidTimer = Random.Range (4f, 9f);
+								enemyTimer = Random.Range (4f, 9f);
 						}
 				} else if (stage == 2) {
-						if (!virusActive && nobodyHasBeenInfected) {
+						if (!virusActive && noInfectionsYet) {
 								spawnVirus ();
-								virusActive = true;
 						}
 				
 				}
@@ -62,6 +61,16 @@ public class AIDirector : MonoBehaviour
 				xpUp (tag, 10); 
 		}
 
+		public static void infectionHappened ()
+		{
+				noInfectionsYet = false;
+		}
+
+		public static void virusDecayed ()
+		{
+				virusActive = false;
+		}
+
 		void CheckXp ()
 		{
 				if (xp > 30 && stage == 0) {
@@ -71,9 +80,9 @@ public class AIDirector : MonoBehaviour
 				}
 		}
 	
-		private void spawnPlasmid (float stage0spawnRangeModifier)
+		private void spawnPlasmid (float range)
 		{
-				spawnPlasmid (randomLocation (stage0spawnRangeModifier));
+				spawnPlasmid (randomLocation (range));
 		}
 
 		private void spawnPlasmid ()
@@ -98,7 +107,8 @@ public class AIDirector : MonoBehaviour
 
 		private void spawnVirus ()
 		{
-				GameObject newVirus = (GameObject)Instantiate (virusPrefab, randomLocation (1), Quaternion.identity);
+				Instantiate (virusPrefab, randomLocation (1), Quaternion.identity);
+				virusActive = true;
 		}
 
 		private Vector3 randomLocation (float rangeModifier)

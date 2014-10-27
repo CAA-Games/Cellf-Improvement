@@ -45,6 +45,7 @@ public class CellLogic : MonoBehaviour
 				} else if (col.gameObject.tag == "Virus") {
 						InfectCellWithVirus (col.gameObject);
 						AIDirector.xpUp (gameObject.tag, 10);
+						AIDirector.infectionHappened ();
 				} else if (col.gameObject.tag != gameObject.tag) {
 						TakeDamage (1.0f);
 						AIDirector.xpUp (gameObject.tag, 1);

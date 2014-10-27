@@ -5,14 +5,14 @@ public class Decay : MonoBehaviour
 {
 
 		public float lifetime;
-		public float remainingLifetime;
+		public float currentAliveTime;
 		public bool visibleOnCamera;
 
 		void Update ()
 		{
 				if (!visibleOnCamera) {
-						remainingLifetime += Time.deltaTime;
-						if (remainingLifetime >= lifetime) {
+						currentAliveTime += Time.deltaTime;
+						if (currentAliveTime >= lifetime) {
 								Destroy (gameObject);
 						}
 				}
@@ -21,7 +21,7 @@ public class Decay : MonoBehaviour
 		void OnBecameVisible ()
 		{
 				visibleOnCamera = true;
-				remainingLifetime = 0;
+				currentAliveTime = 0;
 		}
 
 		void OnBecameInvisible ()
