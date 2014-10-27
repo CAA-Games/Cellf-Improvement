@@ -14,6 +14,8 @@ public class CellLogic : MonoBehaviour
 		private GameObject virus;
 		// Amount of health damage cell takes per second
 		public float virusResistance = 1.0f;
+		// In percent (0-100)
+		public float plasmidDropChance = 50.0f;
 
 	#region Unity callbacks
 
@@ -105,10 +107,16 @@ public class CellLogic : MonoBehaviour
 						if (infected) {
 								SpreadVirus ();
 						}
-						transform.parent.gameObject.SendMessage ("RemoveCell", gameObject);
-						Destroy (Instantiate (explosion, transform.position, Quaternion.identity), 15.0f);
-						Destroy (gameObject);		
+						if (Random.Range (0f, 100f) <= plasmidDropChance && !infected) {
+								transform.parent.gameObject.SendMessage ("dropPlasmid", gameObject);
+								
+						} else {
+								transform.parent.gameObject.SendMessage ("RemoveCell", gameObject);
+								Destroy (Instantiate (explosion, transform.position, Quaternion.identity), 15.0f);
+								Destroy (gameObject);	
+						}
 				}
 				gameObject.particleSystem.emissionRate = (10f - currentHealth / maxHealth * 10f);
+				
 		}
 }

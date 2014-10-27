@@ -24,8 +24,7 @@ public class PlasmidLogic : MonoBehaviour
 		public float currentRed = 1f;
 		public float currentSize = 0f;
 		public float currentLength = 1f;
-
-		// Use this for initialization
+	
 		void Start ()
 		{
 				cells = new Dictionary<GameObject,PlasmidEffect> ();
@@ -35,8 +34,7 @@ public class PlasmidLogic : MonoBehaviour
 				}
 				updateBacterium ();
 		}
-	
-		// Update is called once per frame
+
 		void Update ()
 		{		
 				if (plasmidsToAdd > 0) {
@@ -91,6 +89,19 @@ public class PlasmidLogic : MonoBehaviour
 								//part.GetComponent<CellAppearance>().updateColor(82 - (int)currentRed * 3, 99 - (int)currentGreen * 3, 126 - (int)currentBlue * 3);
 						}
 				}
+		}
+
+		public void dropPlasmid (GameObject plasmidToDrop)
+		{
+				GameObject newPlasmid = (GameObject)Instantiate (instantiatingPlasmid, new Vector3 (plasmidToDrop.transform.position.x, plasmidToDrop.transform.position.y, 0), Quaternion.identity);
+				PlasmidEffect effect = newPlasmid.gameObject.AddComponent<PlasmidEffect> ();
+				copyPlasmidEffect (effect, cells [plasmidToDrop]);
+				Vector3 direction = plasmidToDrop.transform.position;
+				if (direction.magnitude > 1) {
+						direction = direction.normalized;
+				}
+				newPlasmid.rigidbody2D.AddForce (direction * 500);
+				RemoveCell (plasmidToDrop);
 		}
 
 		void dropPlasmid (Vector3 direction)
