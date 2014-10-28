@@ -4,7 +4,7 @@ using System.Collections;
 public class RotateObject : MonoBehaviour {
 
 	public float speed = 1;
-	public float neg = 1;
+	float neg = 1;
 	
 	// Use this for initialization
 	void Start () {
