@@ -125,18 +125,19 @@ public class AIDirector : MonoBehaviour
 	
 		private void spawnPlasmid (float range)
 		{
-				spawnPlasmid (randomLocation (range));
+				spawnPlasmid (randomLocation (range), true);
 		}
 
 		private void spawnPlasmid ()
 		{
-				spawnPlasmid (randomLocation (1));
+				spawnPlasmid (randomLocation (1), true);
 		}
 
-		private void spawnPlasmid (Vector3 position)
+		private void spawnPlasmid (Vector3 position, bool spawnWithEffect)
 		{
 				GameObject newPlasmid = (GameObject)Instantiate (plasmidPrefab, position, Quaternion.identity);
 				PlasmidEffect effect = newPlasmid.gameObject.AddComponent<PlasmidEffect> ();
+				newPlasmid.GetComponent<PlasmidLogic> ().spawnWithEffect = spawnWithEffect;
 				randomizeAttributes (effect);
 		}
 
@@ -144,7 +145,7 @@ public class AIDirector : MonoBehaviour
 		{
 				GameObject newEnemy = (GameObject)Instantiate (enemy, randomLocation (1), Quaternion.identity);
 				for (int i = 0; i < size; i++) {
-						spawnPlasmid (newEnemy.transform.position);
+						spawnPlasmid (newEnemy.transform.position, false);
 				}
 				return newEnemy;
 		}
