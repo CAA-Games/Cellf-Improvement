@@ -26,6 +26,6 @@ public class MoveToClickPersp : MonoBehaviour
 						distance = distance.normalized;
 				}
 		
-				transform.Translate (distance * gameObject.GetComponent<PlasmidLogic> ().currentSpeed * Time.deltaTime);
+				transform.Translate (distance * gameObject.GetComponent<BacteriumLogic> ().currentSpeed * Time.deltaTime);
 		}
 }

@@ -15,7 +15,7 @@ public class ScalePulse : MonoBehaviour
 
 		void Update ()
 		{
-				Vector3 scale = new Vector3 (baseScale, baseScale, baseScale) + Vector3.one * Mathf.Sin (randomSeed + Time.frameCount * rate) * pulseSizeDifference;
+				Vector3 scale = new Vector3 (baseScale, baseScale, baseScale) + Vector3.one * Mathf.Sin (randomSeed + Time.renderedFrameCount * rate) * pulseSizeDifference;
 				transform.localScale = scale;
 		}
 }
