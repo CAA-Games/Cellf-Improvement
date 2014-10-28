@@ -3,12 +3,13 @@ using System.Collections;
 
 public class BossLogic : MonoBehaviour
 {
-
+		public GameObject player;
 		public Vector3 anchorPosition;
 		public float timer = 3;
 		public bool initialized = false;
 		public int stage = 0;
 		private float shootingCooldown = 0;
+		private bool alternateBehavior = false;
 
 		void Start ()
 		{
@@ -25,7 +26,14 @@ public class BossLogic : MonoBehaviour
 				if (stage == 0) {
 						MoveToAnchorPosition ();
 						if (timer <= 0) {
-								anchorPosition = ApplicationLogic.randomRotation () * Vector3.up * 15f;
+								if (alternateBehavior && player) {
+										anchorPosition = (player.transform.position - transform.position).normalized * 16f;
+										print ("twards player!");
+										
+								} else {
+										anchorPosition = ApplicationLogic.randomRotation () * Vector3.up * 16f;
+								}
+								alternateBehavior = !alternateBehavior;
 								anchorPosition += transform.position;
 								timer = 2;
 								stage = 1;

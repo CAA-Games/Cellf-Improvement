@@ -19,6 +19,11 @@ public class AIDirector : MonoBehaviour
 		public static bool virusActive = false;
 		public static bool noInfectionsYet = true;
 
+		void Start ()
+		{
+				stage = 0;
+		}
+
 		void Update ()
 		{ 
 				plasmidTimer -= Time.deltaTime;
@@ -55,6 +60,7 @@ public class AIDirector : MonoBehaviour
 						stage++;		
 						GameObject boss = spawnEnemy (50);
 						boss.AddComponent<BossLogic> ();
+						boss.GetComponent<BossLogic> ().player = player;
 				} else if (stage == 5) {
 						if (!virusActive && noInfectionsYet) {
 								spawnVirus ();
