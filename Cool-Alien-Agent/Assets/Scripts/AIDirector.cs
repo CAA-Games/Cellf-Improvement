@@ -11,18 +11,13 @@ public class AIDirector : MonoBehaviour
 		public GameObject player;
 		public GameObject enemy;
 		private int playerSize;
-		public static int xp;
+		public static int xp = 0;
 		public static int stage = 0;
 		public float plasmidTimer = 1;
 		public float enemyTimer = 1;
 		public float spawnRange = 10, spawnRangeVariance = 5;
 		public static bool virusActive = false;
 		public static bool noInfectionsYet = true;
-
-		void Start ()
-		{
-				stage = 0;
-		}
 
 		void Update ()
 		{ 
@@ -109,6 +104,12 @@ public class AIDirector : MonoBehaviour
 		public static void PlayerDied ()
 		{
 
+		}
+
+		public static void startOver ()
+		{
+				stage = 0;
+				xp = 0;
 		}
 
 		void CheckXp ()
