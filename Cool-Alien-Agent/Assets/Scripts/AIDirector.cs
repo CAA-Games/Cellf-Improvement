@@ -11,18 +11,13 @@ public class AIDirector : MonoBehaviour
 		public GameObject player;
 		public GameObject enemy;
 		private int playerSize;
-		public static int xp;
+		public static int xp = 0;
 		public static int stage = 0;
 		public float plasmidTimer = 1;
 		public float enemyTimer = 1;
 		public float spawnRange = 10, spawnRangeVariance = 5;
 		public static bool virusActive = false;
 		public static bool noInfectionsYet = true;
-
-		void Start ()
-		{
-				stage = 0;
-		}
 
 		void Update ()
 		{ 
@@ -111,6 +106,12 @@ public class AIDirector : MonoBehaviour
 
 		}
 
+		public static void startOver ()
+		{
+				stage = 0;
+				xp = 0;
+		}
+
 		void CheckXp ()
 		{
 				if (xp > 30 && stage == 0) {
@@ -124,18 +125,19 @@ public class AIDirector : MonoBehaviour
 	
 		private void spawnPlasmid (float range)
 		{
-				spawnPlasmid (randomLocation (range));
+				spawnPlasmid (randomLocation (range), true);
 		}
 
 		private void spawnPlasmid ()
 		{
-				spawnPlasmid (randomLocation (1));
+				spawnPlasmid (randomLocation (1), true);
 		}
 
-		private void spawnPlasmid (Vector3 position)
+		private void spawnPlasmid (Vector3 position, bool spawnWithEffect)
 		{
 				GameObject newPlasmid = (GameObject)Instantiate (plasmidPrefab, position, Quaternion.identity);
 				PlasmidEffect effect = newPlasmid.gameObject.AddComponent<PlasmidEffect> ();
+				newPlasmid.GetComponent<PlasmidLogic> ().spawnWithEffect = spawnWithEffect;
 				randomizeAttributes (effect);
 		}
 
@@ -143,7 +145,7 @@ public class AIDirector : MonoBehaviour
 		{
 				GameObject newEnemy = (GameObject)Instantiate (enemy, randomLocation (1), Quaternion.identity);
 				for (int i = 0; i < size; i++) {
-						spawnPlasmid (newEnemy.transform.position);
+						spawnPlasmid (newEnemy.transform.position, false);
 				}
 				return newEnemy;
 		}

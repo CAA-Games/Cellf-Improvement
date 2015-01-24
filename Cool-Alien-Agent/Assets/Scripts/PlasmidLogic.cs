@@ -8,10 +8,13 @@ public class PlasmidLogic : MonoBehaviour
 		public float currentGraceTime = 0f;
 		public bool canBePickedUp = false;
 		public GameObject spawnEffect;
+		public bool spawnWithEffect = true;
 
 		void Start ()
 		{
-				Destroy (Instantiate (spawnEffect, transform.position, Quaternion.identity), 11.0f);
+				if (spawnWithEffect) {
+						Destroy (Instantiate (spawnEffect, transform.position, Quaternion.identity), 11.0f);
+				}
 		}
 
 		void Update ()
